@@ -14,7 +14,7 @@ YiraBot is a sophisticated Python-based command-line tool, designed for users ra
 
 **Rich Data Extraction:** From extracting meta tags, images, and links to parsing sitemaps, YiraBot provides detailed insights about web pages, enhancing your data collection and analysis capabilities.
 
-**Cross-Platform Compatibility:** Designed to run on various operating systems, YiraBot is versatile and adaptable to different development environments.
+**Cross-Platform Compatibility:** Compatible for any unix based operating system.
 ### Ideal for Use Cases Such as:
 -Academic research requiring data collection from multiple web sources.
 
@@ -63,4 +63,4 @@ yirabot help
 ### Contributing
 Contributions to the YiraBot project are welcomed. Feel free to fork the repository, make your changes, and submit pull requests.
 ### License
-YiraBot is open-sourced software licensed under the MIT License.
+YiraBot is open-sourced software licensed under the [MIT LICENSE](https://github.com/OwenOrcan/YiraBot-Crawler?tab=MIT-1-ov-file).
