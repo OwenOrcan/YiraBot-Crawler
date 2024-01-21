@@ -63,4 +63,4 @@ yirabot help
 ### Contributing
 Contributions to the YiraBot project are welcomed. Feel free to fork the repository, make your changes, and submit pull requests.
 ### License
-YiraBot is open-sourced software licensed under the MIT License.
+YiraBot is open-sourced software licensed under the [MIT LICENSE](https://github.com/OwenOrcan/YiraBot-Crawler?tab=MIT-1-ov-file).
