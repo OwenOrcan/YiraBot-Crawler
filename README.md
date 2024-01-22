@@ -1,4 +1,6 @@
 # YiraBot
+![Yira Logo](https://yira.me/static/images/favicon.ico "Yira") 
+
 [![dependency - YiraBot](https://img.shields.io/badge/PyPi-YiraBot-purple?logo=python&logoColor=white)](https://pypi.org/project/YiraBot)
 
 YiraBot is a sophisticated Python-based command-line tool, designed for users ranging from developers to data enthusiasts who require an efficient and user-friendly way to collect data from the web. This tool streamlines the process of web crawling, offering an intuitive interface and powerful capabilities to gather and organize web data with ease.
