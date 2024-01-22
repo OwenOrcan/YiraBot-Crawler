@@ -17,6 +17,8 @@ YiraBot is a sophisticated Python-based command-line tool, designed for users ra
 
 **Rich Data Extraction:** From extracting meta tags, images, and links to parsing sitemaps, YiraBot provides detailed insights about web pages, enhancing your data collection and analysis capabilities.
 
+**Extracting Data To Files:** Feature to extract the data to a file.
+
 **Cross-Platform Compatibility:** Compatible with every Operating System
 ### Ideal for Use Cases Such as:
 -Academic research requiring data collection from multiple web sources.
@@ -47,6 +49,10 @@ yirabot <command> [arguments]
 Crawling a webpage:
 ```bash
 yirabot crawl https://example.com
+```
+Crawling a webpage and extracting the data to a file.
+```bash
+yirabot crawl https://example.com -file
 ```
 Displatying the help menu
 ```bash

@@ -4,18 +4,23 @@ import sys
 from progress.bar import Bar
 import subprocess
 import signal
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, Tag
 import requests
 import textwrap
 import urllib.robotparser
 import time
+import csv
+from datetime import datetime
+
 
 program_path = "/usr/local/bin/yirabot"
 
 COMMANDS = {
     "help": "Used to show all usable commands. Usage: yirabot help",
-    "crawl": "Used to crawl webpages and get data. Usage: yirabot crawl <url>"
+    "crawl": "Used to crawl webpages and get data. Usage: yirabot crawl <url>. Optionally use the '-file' flag to extract the data to a file"
 }
+
+WRITE_TO_FILE = False
 
 def main():
     if len(sys.argv) < 2:
@@ -30,6 +35,15 @@ def main():
             case "help":
                 help()
             case "crawl":
+                try:
+                    FLAG = sys.argv[3]
+                    if FLAG == "-file":
+                        global WRITE_TO_FILE
+                        WRITE_TO_FILE = True
+                    else:
+                        sys.exit(f"YiraBot: Unrecognized flag: {FLAG}")
+                except IndexError:
+                    pass
                 try:
                     if ARGUMENT.startswith("https://") or ARGUMENT.startswith("http://"):
                         crawl(ARGUMENT)
@@ -105,17 +119,33 @@ def uninstall():
     else:
         print("YiraBot: YiraBot is not installed on your system.")'''
 
+
+
+def write_to_file(data, filename):
+    with open(filename, 'w') as file:
+        for key, value in data.items():
+            if isinstance(value, list):
+                # Convert each element to string if it's a BeautifulSoup Tag
+                str_values = [str(item) if isinstance(item, Tag) else item for item in value]
+                value = ', '.join(str_values)
+            file.write(f"{key.capitalize()}: {value}\n")
+            file.write("-" * 50 + "\n")  # Divider
+
+
+
+def divider():
+    print("-" * 80)
+    time.sleep(0.5)
+
 def help():
     global COMMANDS
-    print("ALL USABLE COMMANDS")
+    print("ALL AVAILABLE COMMANDS")
+    divider()
     for command in COMMANDS:
         print(f"{command}: {COMMANDS[command]}")
+        divider()
 
 def crawl(url):
-    def divider():
-        print("-" * 80)
-        time.sleep(0.5)
-
     def is_allowed_by_robots_txt(url):
         rp = urllib.robotparser.RobotFileParser()
         rp.set_url(url + "/robots.txt")
@@ -124,8 +154,11 @@ def crawl(url):
 
     def parse_sitemap(url):
         sitemap_url = url + "/sitemap.xml"
+        secondary_url = url + "/static/sitemap.xml"
         try:
             response = requests.get(sitemap_url)
+        except Exception:
+            response = requests.get(secondary_url)
             if response.status_code == 200:
                 soup = BeautifulSoup(response.content, 'xml')
                 urls = [element.text for element in soup.find_all("loc")]
@@ -133,122 +166,95 @@ def crawl(url):
         except requests.exceptions.RequestException:
             return []
 
-
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'}
 
     if not is_allowed_by_robots_txt(url):
-        print("Crawling forbidden by robots.txt")
+        print("YiraBot: Crawling forbidden by robots.txt")
         return
 
     try:
-        # Send a request to the URL with custom headers
         response = requests.get(url, headers=headers)
-
-        # Check if the request was successful
         response.raise_for_status()
-
-        # Use BeautifulSoup to parse the HTML
         soup = BeautifulSoup(response.text, features="html5lib")
 
-        # Find the <link> tag with rel="icon"
         favicon_tag = soup.find("link", {"rel": "icon"})
-        # Find The Meta Description:
         meta_description_tag = soup.find("meta", {"name": "description"})
-        # Find Title
         title_tag = soup.find("title")
-        # Find Open Graph Tags
         og_tags = soup.find_all("meta", property=lambda x: x and x.startswith("og:"))
-        # Find Twitter Tags
         twitter_tags = soup.find_all("meta", attrs={"name": lambda x: x and x.startswith("twitter:")})
-        # Find Canonical URL
         canonical_tag = soup.find("link", {"rel": "canonical"})
+
+        links = soup.find_all('a', href=True)
+        internal_links = [link['href'] for link in links if link['href'].startswith('/')]
+        external_links = [link['href'] for link in links if link['href'].startswith('http')]
+        images = soup.find_all('img', src=True)
+        image_urls = [img['src'] for img in images]
+        sitemap_urls = parse_sitemap(url)
 
         with Bar(f'Yirabot Crawling: {url}', max=40) as bar:
             for i in range(40):
                 time.sleep(0.060)
                 bar.next()
 
-        if favicon_tag:
-            favicon_link = favicon_tag.get("href")
-            print("Favicon:", favicon_link)
-            divider()
-        else:
-            print("This Page Has No Favicon.")
+        data = {
+            'favicon': favicon_tag.get("href") if favicon_tag else None,
+            'meta_description': meta_description_tag.get("content") if meta_description_tag else None,
+            'title': title_tag.get_text() if title_tag else None,
+            'open_graph_tags': og_tags,
+            'twitter_card_tags': twitter_tags,
+            'canonical_url': canonical_tag.get("href") if canonical_tag else None,
+            'internal_links': internal_links,
+            'external_links': external_links,
+            'image_urls': image_urls,
+            'sitemap_urls': sitemap_urls
+        }
 
-        if meta_description_tag:
-            meta_description = meta_description_tag.get("content")
-            wrapped_description = textwrap.fill(meta_description, width=80)
-            print("Meta Description:", wrapped_description)
-            divider()
-        else:
-            print("This Page Has No Current Description")
-            divider()
+        if WRITE_TO_FILE:
+            if WRITE_TO_FILE:
+                # Replace problematic characters in the URL
+                safe_url = url.replace("https://", "").replace("http://", "").replace("/", "_")
 
-        if title_tag:
-            title = title_tag.get_text()
-            print("Website Title:", title)
-            divider()
-        else:
-            print("This Page Has No Title.")
-            divider()
+                # Format the current timestamp
+                timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 
-        if og_tags:
-            print("Open Graph Tags:")
-            for tag in og_tags:
-                og_property = tag.get("property", tag.get("name"))
-                og_content = tag.get("content")
-                print(f"{og_property}: {og_content}")
-            divider()
-        else:
-            print("This Page Has No Open Graph Tags.")
-            divider()
+                # Generate a safe filename
+                filename = f"{safe_url}.{timestamp}.txt"
 
-        if twitter_tags:
-            print("Twitter Card Tags:")
-            for tag in twitter_tags:
-                twitter_property = tag.get("name")
-                twitter_content = tag.get("content")
-                print(f"{twitter_property}: {twitter_content}")
-            divider()
-        else:
-            print("This Page Has No Twitter Card Tags.")
-            divider()
+                write_to_file(data, filename)
+                divider()
+                sys.exit("YiraBot: file created.")
 
-        if canonical_tag:
-            canonical_url = canonical_tag.get("href")
-            print("Canonical URL:", canonical_url)
-            divider()
-        else:
-            print("This Page Has No Canonical URL.")
-            divider()
-
-        # Link Extraction
-        links = soup.find_all('a', href=True)
-        internal_links = [link['href'] for link in links if link['href'].startswith('/')]
-        external_links = [link['href'] for link in links if link['href'].startswith('http')]
-        print("Internal Links:", internal_links)
+        # Print statements
         divider()
-        print("External Links:", external_links)
+        print("Favicon:", data['favicon'])
         divider()
-
-        # Image Extraction
-        images = soup.find_all('img', src=True)
-        image_urls = [img['src'] for img in images]
-        print("Image URLs:", image_urls)
+        print("Meta Description:", textwrap.fill(data['meta_description'], width=80) if data['meta_description'] else "This Page Has No Current Description")
         divider()
-
-        # Content Extraction (Example for article content, adjust based on site structure)
-        # For example, if the main content is inside a div with class 'article-body', you can use:
-        # content = soup.find('div', class_='article-body').get_text(strip=True)
-        # print("Content:", content)
-        # divider()
-
-        # Sitemap Parsing (Optional)
-        sitemap_urls = parse_sitemap(url)
-        if sitemap_urls:
-            print("Sitemap URLs:", sitemap_urls)
-            divider()
+        print("Website Title:", data['title'] if data['title'] else "This Page Has No Title.")
+        divider()
+        print("Open Graph Tags:")
+        for tag in data['open_graph_tags']:
+            og_property = tag.get("property", tag.get("name"))
+            og_content = tag.get("content")
+            print(f"{og_property}: {og_content}")
+        divider()
+        print("Twitter Card Tags:")
+        for tag in data['twitter_card_tags']:
+            twitter_property = tag.get("name")
+            twitter_content = tag.get("content")
+            print(f"{twitter_property}: {twitter_content}")
+        divider()
+        print("Canonical URL:", data['canonical_url'])
+        divider()
+        print("Internal Links:", data['internal_links'])
+        divider()
+        print("External Links:", data['external_links'])
+        divider()
+        print("Image URLs:", data['image_urls'])
+        divider()
+        print("Sitemap URLs:", data['sitemap_urls'])
+        divider()
 
     except requests.exceptions.HTTPError as http_err:
         print(f"HTTP error occurred: {http_err}")
