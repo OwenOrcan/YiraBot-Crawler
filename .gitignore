@@ -2,3 +2,6 @@ __pycache__/
 .idea/
 *.iml
 .vscode/
+build/
+dist/
+YiraBot.egg-info/

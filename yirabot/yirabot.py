@@ -13,7 +13,6 @@ import time
 program_path = "/usr/local/bin/yirabot"
 
 COMMANDS = {
-    "setup": "Used to install YiraBot when first installed. Usage: python3 yirabot.py setup",
     "uninstall": "Used to uninstall YiraBot from the system. Usage: yirabot uninstall",
     "help": "Used to show all usable commands. Usage: yirabot help",
     "crawl": "Used to crawl webpages and get data. Usage: yirabot crawl <url>"
@@ -29,10 +28,6 @@ def main():
         except IndexError:
             pass
         match COMMAND.lower():
-            case "setup":
-                setup()
-            case "uninstall":
-                uninstall()
             case "help":
                 help()
             case "crawl":
@@ -45,8 +40,8 @@ def main():
                     sys.exit("YiraBot: Enter a link to crawl.")
             case _:
                 print("YiraBot: Unknown Command.")
-
-
+# Old Setup Function
+''' 
 def setup():
     global program_path
     if os.path.exists(program_path):
@@ -84,9 +79,10 @@ def setup():
         except ProcessLookupError:
             # If the process is no longer running, just pass
             pass
-        return
+        return'''
 
-
+# Old uninstall function
+'''
 def uninstall():
     global program_path
     if os.path.exists(program_path):
@@ -108,7 +104,7 @@ def uninstall():
         else:
             print("Invalid input. Please enter 'Y' for yes or 'N' for no.")
     else:
-        print("YiraBot: YiraBot is not installed on your system.")
+        print("YiraBot: YiraBot is not installed on your system.")'''
 
 def help():
     global COMMANDS
