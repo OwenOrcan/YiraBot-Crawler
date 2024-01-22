@@ -15,7 +15,7 @@ YiraBot is a sophisticated Python-based command-line tool, designed for users ra
 
 **Rich Data Extraction:** From extracting meta tags, images, and links to parsing sitemaps, YiraBot provides detailed insights about web pages, enhancing your data collection and analysis capabilities.
 
-**Cross-Platform Compatibility:** Compatible for any unix based operating system.
+**Cross-Platform Compatibility:** Compatible with every Operating System
 ### Ideal for Use Cases Such as:
 -Academic research requiring data collection from multiple web sources.
 
