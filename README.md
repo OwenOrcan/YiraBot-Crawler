@@ -1,4 +1,5 @@
 # YiraBot
+[![dependency - YiraBot](https://img.shields.io/badge/PyPi-YiraBot-purple?logo=python&logoColor=white)](https://pypi.org/project/YiraBot)
 
 YiraBot is a sophisticated Python-based command-line tool, designed for users ranging from developers to data enthusiasts who require an efficient and user-friendly way to collect data from the web. This tool streamlines the process of web crawling, offering an intuitive interface and powerful capabilities to gather and organize web data with ease.
 
@@ -27,18 +28,9 @@ YiraBot is a sophisticated Python-based command-line tool, designed for users ra
 
 ## Installation
 
-Ensure Python is installed on your system before installing YiraBot. Follow these steps for installation:
-
-1. Clone the YiraBot repository or download the `yirabot.py` script to your local machine.
-2. Navigate to the directory containing `yirabot.py`.
-3. Execute `python3 yirabot.py setup` in your terminal to install YiraBot.
-
-### Requirements
-
-YiraBot requires several dependencies, which are listed in the `requirements.txt` file. Install these dependencies by running:
-
+Ensure Python and Pip is installed on your system before installing YiraBot. Follow these steps for installation:
 ```bash
-pip install -r requirements.txt
+pip install YiraBot
 ```
 ### Usage
 ```bash
@@ -46,8 +38,6 @@ yirabot <command> [arguments]
 ```
 ### Commands
 ```bash
--setup: Installs YiraBot on your system. Usage: python3 yirabot.py setup
--uninstall: Removes YiraBot from your system. Usage: yirabot uninstall
 -help: Displays a list of all available commands. Usage: yirabot help
 -crawl: Crawls a webpage and retrieves data. Usage: yirabot crawl <url>
 ```
