@@ -13,7 +13,6 @@ import time
 program_path = "/usr/local/bin/yirabot"
 
 COMMANDS = {
-    "uninstall": "Used to uninstall YiraBot from the system. Usage: yirabot uninstall",
     "help": "Used to show all usable commands. Usage: yirabot help",
     "crawl": "Used to crawl webpages and get data. Usage: yirabot crawl <url>"
 }
