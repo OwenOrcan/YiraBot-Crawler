@@ -45,7 +45,7 @@ Ensure Python and Pip is installed on your system before installing YiraBot. Fol
 ```bash
 pip install YiraBot
 ```
-### Usage
+## Command-Line Usage
 ```bash
 yirabot <command> [arguments]
 ```
