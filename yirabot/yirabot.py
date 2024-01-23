@@ -7,7 +7,7 @@ import textwrap
 import urllib.robotparser
 import time
 from datetime import datetime
-from .crawl import crawl,crawl_content
+from crawl import crawl,crawl_content
 from colorama import Fore
 
 
@@ -74,7 +74,7 @@ def main():
 
 def help():
     HELP_MESSAGE = Fore.RED+"""
-YiraBot Web Crawler v1.0.6""" + Fore.CYAN + """
+YiraBot Web Crawler v1.0.6.2""" + Fore.CYAN + """
 
 Crawl Commands:""" + Fore.RESET + """
 

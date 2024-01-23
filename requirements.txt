@@ -1,5 +1,4 @@
 beautifulsoup4==4.12.3
-progress==1.6
 Requests==2.31.0
 rich==13.7.0
 tqdm==4.66.1

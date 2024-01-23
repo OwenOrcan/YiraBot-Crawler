@@ -194,8 +194,8 @@ def crawl(url, extract=False):
         except Exception as e:
             print(f"An error occurred while parsing the page: {e}")
 
-    except urllib.error.URLError:
-        sys.exit(f"Yirabot: Url is invalid. {url}")
+    except urllib.error.URLError as e:
+        sys.exit(f"Yirabot:URL exception occured: {e}")
     except KeyboardInterrupt or EOFError:
         sys.exit("YiraBot: Process aborted")
 
