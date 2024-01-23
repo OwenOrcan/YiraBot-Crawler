@@ -9,7 +9,7 @@ setup(
     author_email='owenorcan@gmail.com',
     url='https://github.com/OwenOrcan/Yirabot-Crawler',
     license='MIT',
-    description='A sophisticated Python-based command-line tool for web crawling',
+    description='A sophisticated Python module and command-line tool for web crawling',
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
 
