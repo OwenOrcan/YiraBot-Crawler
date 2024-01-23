@@ -7,7 +7,7 @@ import textwrap
 import urllib.robotparser
 import time
 from datetime import datetime
-from crawl import crawl,crawl_content
+from .crawl import crawl,crawl_content
 from colorama import Fore
 
 
