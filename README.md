@@ -40,24 +40,24 @@ pip install YiraBot
 ```bash
 yirabot <command> [arguments]
 ```
-### Commands
-```bash
--help: Displays a list of all available commands. Usage: yirabot help
--crawl: Crawls a webpage and retrieves data. Usage: yirabot crawl <url>
-```
 ### Examples
+Displatying the help menu
+```bash
+yirabot
+```
 Crawling a webpage:
 ```bash
-yirabot crawl https://example.com
+yirabot crawl example.com
 ```
 Crawling a webpage and extracting the data to a file.
 ```bash
-yirabot crawl https://example.com -file
+yirabot crawl example.com -file
 ```
-Displatying the help menu
+Crawling a webpage to get the content:
 ```bash
-yirabot help
+yirabot crawl-content example.com
 ```
+
 ### Contributing
 Contributions to the YiraBot project are welcomed. Feel free to fork the repository, make your changes, and submit pull requests.
 ### License

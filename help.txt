@@ -1,0 +1,12 @@
+
+YiraBot Web Crawler v1.0.5
+
+Crawl Commands:
+
+Basic Crawl: yirabot crawl example.com
+Extract Data to File: yirabot crawl example.com -file
+Content Crawl: yirabot crawl-content example.com
+Content Crawl to file: yirabot crawl-content example.com -file
+
+Documentation: https://github.com/OwenOrcan/YiraBot-Crawler
+
