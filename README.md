@@ -3,7 +3,7 @@
 
 [![dependency - YiraBot](https://img.shields.io/badge/v1.0.6-PyPI-purple?logo=python&logoColor=white)](https://pypi.org/project/YiraBot)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/OwenOrcan/YiraBot-Crawler/blob/master/LICENSE)
-[![GitHub stars](https://img.shields.io/github/stars/OwenOrcan/YiraBot-Crawler.svg?style=social&label=Star&maxAge=2592000)](https://GitHub.com/OwenOrcan/YiraBot-Crawler/stargazers/)
+[![GitHub stars](https://img.shields.io/github/stars/OwenOrcan/yirabot-craw;er.svg?style=social&label=Star&maxAge=2592000)](https://GitHub.com/OwenOrcan/YiraBot-Crawler/stargazers/)
 [![GitHub forks](https://img.shields.io/github/forks/OwenOrcan/YiraBot-Crawler.svg?style=social&label=Fork&maxAge=2592000)](https://GitHub.com/OwenOrcan/YiraBot-Crawler/network/)
 [![GitHub pull-requests](https://img.shields.io/github/issues-pr/OwenOrcan/YiraBot-Crawler.svg)](https://GitHub.com/OwenOrcan/YiraBot-Crawler/pull/)
 [![GitHub release](https://img.shields.io/github/release/OwenOrcan/YiraBot-Crawler.svg)](https://GitHub.com/OwenOrcan/YiraBot-Crawler/releases/)
