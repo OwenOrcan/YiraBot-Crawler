@@ -1,17 +1,14 @@
 #!/usr/bin/env python3
 import os
 import sys
-from progress.bar import Bar
-import subprocess
-import signal
 from bs4 import BeautifulSoup, Tag
 import requests
 import textwrap
 import urllib.robotparser
 import time
-import csv
 from datetime import datetime
 from .crawl import crawl,crawl_content
+from colorama import Fore
 
 
 
@@ -34,14 +31,18 @@ def main():
                     if ARGUMENT.startswith("https://") or ARGUMENT.startswith("http://"):
                         if FLAG == "-file":
                             crawl(ARGUMENT, extract=True)
-                        else:
+                        elif FLAG == None:
                             crawl(ARGUMENT)
+                        else:
+                            sys.exit(f"YiraBot: Unrecognized Flag: {FLAG}")
                     else:
                         ARGUMENT = "https://" + ARGUMENT
                         if FLAG == "-file":
                             crawl(ARGUMENT, extract=True)
-                        else:
+                        elif FLAG == None:
                             crawl(ARGUMENT)
+                        else:
+                            sys.exit(f"YiraBot: Unrecognized Flag: {FLAG}")
                 except UnboundLocalError:
                     sys.exit("YiraBot: Enter a link to crawl.")
 
@@ -54,31 +55,39 @@ def main():
                     if ARGUMENT.startswith("https://") or ARGUMENT.startswith("http://"):
                         if FLAG == "-file":
                             crawl_content(ARGUMENT, extract=True)
-                        else:
+                        elif FLAG == None:
                             crawl_content(ARGUMENT)
+                        else:
+                            sys.exit(f"YiraBot: Unrecognized Flag: {FLAG}")
                     else:
                         ARGUMENT = "https://" + ARGUMENT
                         if FLAG == "-file":
                             crawl_content(ARGUMENT, extract=True)
-                        else:
+                        elif FLAG == None:
                             crawl_content(ARGUMENT)
+                        else:
+                            sys.exit(f"YiraBot: Unrecognized Flag: {FLAG}")
                 except UnboundLocalError:
                     sys.exit("YiraBot: Enter a link to crawl.")
             case _:
                 print("YiraBot: Unknown Command.")
 
 def help():
-    HELP_MESSAGE = """
-    YiraBot Web Crawler v1.0.5
-    
-    Crawl Commands:
-    
-    Basic Crawl: yirabot crawl example.com
-    Extract Data to File: yirabot crawl example.com -file
-    Content Crawl: yirabot crawl-content example.com
-    Content Crawl to file: yirabot crawl-content example.com -file
-    
-    Documentation: https://github.com/OwenOrcan/YiraBot-Crawler
+    HELP_MESSAGE = Fore.RED+"""
+YiraBot Web Crawler v1.0.5""" + Fore.CYAN + """
+
+Crawl Commands:""" + Fore.RESET + """
+
+-Basic Crawl: yirabot crawl example.com
+
+-Extract Data to File: yirabot crawl example.com -file
+
+-Content Crawl: yirabot crawl-content example.com
+
+-Content Crawl to file: yirabot crawl-content example.com -file
+""" + Fore.LIGHTBLUE_EX + """
+
+Documentation: https://github.com/OwenOrcan/YiraBot-Crawler
     """
     print(HELP_MESSAGE)
 

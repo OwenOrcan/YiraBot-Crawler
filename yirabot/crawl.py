@@ -14,6 +14,16 @@ import time
 
 
 def write_to_file(data, filename):
+    """
+    Writes given data to a file in a formatted key-value pair style.
+
+    Parameters:
+    data (dict): A dictionary containing the data to be written.
+    filename (str): The name of the file where data will be written.
+
+    Returns:
+    None
+    """
     with open(filename, 'w') as file:
         max_key_length = max(len(key) for key in data.keys())  # Find the longest key
         divider = "-" * (max_key_length + 50)  # Adjust the divider length based on the key length
@@ -28,12 +38,30 @@ def write_to_file(data, filename):
             file.write(f"{divider}\n")
 
 def is_allowed_by_robots_txt(url):
+    """
+    Checks if the given URL is allowed to be crawled according to the robots.txt file.
+
+    Parameters:
+    url (str): The URL to be checked.
+
+    Returns:
+    bool: True if crawling is allowed, False otherwise.
+    """
     rp = urllib.robotparser.RobotFileParser()
     rp.set_url(url + "/robots.txt")
     rp.read()
     return rp.can_fetch("*", url)
 
 def parse_sitemap(url):
+    """
+    Parses the sitemap of a given URL and returns the list of URLs found in it.
+
+    Parameters:
+    url (str): The base URL whose sitemap is to be parsed.
+
+    Returns:
+    list: A list of URLs found in the sitemap.
+    """
     sitemap_url = url + "/sitemap.xml"
     secondary_url = url + "/static/sitemap.xml"
     try:
@@ -51,8 +79,19 @@ def parse_sitemap(url):
         return []
 
 def crawl(url, extract=False):
+    """
+    Crawls a given URL and extracts various information such as metadata, links, and images.
+
+    Parameters:
+    url (str): The URL to be crawled.
+    extract (bool): If True, extracts data to a file. Defaults to False.
+
+    Returns:
+    None
+    """
     try:
-        headers = {'User-Agent': 'Mozilla/5.0 ...'}
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'}
 
         if not is_allowed_by_robots_txt(url):
             print("YiraBot: Crawling forbidden by robots.txt")
@@ -162,9 +201,19 @@ def crawl(url, extract=False):
 
 
 def crawl_content(url, extract=False):
+    """
+    Specifically crawls a URL for its main content like paragraphs, headings, and lists.
+
+    Parameters:
+    url (str): The URL to be crawled for content.
+    extract (bool): If True, extracts data to a file. Defaults to False.
+
+    Returns:
+    None
+    """
     try:
         headers = {
-            'User-Agent': 'Mozilla/5.0 ...'}
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'}
 
         if not is_allowed_by_robots_txt(url):
             print("YiraBot: Crawling forbidden by robots.txt")
