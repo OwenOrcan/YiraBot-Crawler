@@ -1,5 +1,6 @@
 # YiraBot
-![Yira Logo](https://yira.me/static/images/favicon.ico "Yira") 
+![YiraBot ](https://github.com/OwenOrcan/YiraBot-Crawler/assets/144565916/54cfd22f-9bc8-4505-b3fe-ad6dd0de83d4)
+
 
 [![dependency - YiraBot](https://img.shields.io/badge/v1.0.6.4-PyPI-purple?logo=python&logoColor=white)](https://pypi.org/project/YiraBot)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/OwenOrcan/YiraBot-Crawler/blob/master/LICENSE)
@@ -8,6 +9,7 @@
 [![GitHub pull-requests](https://img.shields.io/github/issues-pr/OwenOrcan/YiraBot-Crawler.svg)](https://GitHub.com/OwenOrcan/YiraBot-Crawler/pull/)
 [![GitHub release](https://img.shields.io/github/release/OwenOrcan/YiraBot-Crawler.svg)](https://GitHub.com/OwenOrcan/YiraBot-Crawler/releases/)
 [![Custom Badge](https://img.shields.io/badge/Visit-Yira.me-red)](https://yira.me)
+
 
 ## Overview
 YiraBot is a sophisticated tool designed for efficient web data collection. Primarily a powerful Python-based command-line tool, it also doubles as an integrable module for Python projects. Ideal for developers, data enthusiasts, and researchers, YiraBot streamlines web crawling with an intuitive interface and robust capabilities.
