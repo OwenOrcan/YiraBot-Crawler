@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 import os
 import sys
 from bs4 import BeautifulSoup, Tag
@@ -74,7 +73,7 @@ def main():
 
 def help():
     HELP_MESSAGE = Fore.RED+"""
-YiraBot Web Crawler v1.0.6.3""" + Fore.CYAN + """
+YiraBot Web Crawler v1.0.6.4""" + Fore.CYAN + """
 
 Crawl Commands:""" + Fore.RESET + """
 
