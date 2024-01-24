@@ -74,7 +74,7 @@ def main():
 
 def help():
     HELP_MESSAGE = Fore.RED+"""
-YiraBot Web Crawler v1.0.6.2""" + Fore.CYAN + """
+YiraBot Web Crawler v1.0.6.3""" + Fore.CYAN + """
 
 Crawl Commands:""" + Fore.RESET + """
 
