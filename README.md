@@ -1,7 +1,7 @@
 # YiraBot
 ![Yira Logo](https://yira.me/static/images/favicon.ico "Yira") 
 
-[![dependency - YiraBot](https://img.shields.io/badge/v1.0.6.2-PyPI-purple?logo=python&logoColor=white)](https://pypi.org/project/YiraBot)
+[![dependency - YiraBot](https://img.shields.io/badge/v1.0.6.3-PyPI-purple?logo=python&logoColor=white)](https://pypi.org/project/YiraBot)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/OwenOrcan/YiraBot-Crawler/blob/master/LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/OwenOrcan/yirabot-crawler.svg?style=social&label=Star&maxAge=2592000)](https://GitHub.com/OwenOrcan/YiraBot-Crawler/stargazers/)
 [![GitHub forks](https://img.shields.io/github/forks/OwenOrcan/YiraBot-Crawler.svg?style=social&label=Fork&maxAge=2592000)](https://GitHub.com/OwenOrcan/YiraBot-Crawler/network/)
