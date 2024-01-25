@@ -7,7 +7,7 @@
 [![GitHub stars](https://img.shields.io/github/stars/OwenOrcan/yirabot-crawler.svg?style=social&label=Star&maxAge=2592000)](https://GitHub.com/OwenOrcan/YiraBot-Crawler/stargazers/)
 [![GitHub forks](https://img.shields.io/github/forks/OwenOrcan/YiraBot-Crawler.svg?style=social&label=Fork&maxAge=2592000)](https://GitHub.com/OwenOrcan/YiraBot-Crawler/network/)
 [![GitHub pull-requests](https://img.shields.io/github/issues-pr/OwenOrcan/YiraBot-Crawler.svg)](https://GitHub.com/OwenOrcan/YiraBot-Crawler/pull/)
-[![GitHub release](https://img.shields.io/github/release/OwenOrcan/YiraBot-Crawler.svg)](https://GitHub.com/OwenOrcan/YiraBot-Crawler/releases/)
+
 [![Custom Badge](https://img.shields.io/badge/Visit-Yira.me-red)](https://yira.me)
 
 
