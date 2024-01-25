@@ -5,15 +5,115 @@ import textwrap
 import urllib.robotparser
 from datetime import datetime
 from urllib import error
+from urllib.parse import urljoin
 from tqdm import tqdm
 from rich import print
 from rich.table import Table
 from rich.console import Console
 import time
+import json
 
 
 
-def write_to_file(data, filename):
+
+def seo_error_analysis(url):
+    """
+    Performs an SEO error analysis on the specified webpage.
+
+    This function conducts a thorough check for common SEO pitfalls on the given webpage.
+    It specifically looks for:
+    - Images without 'alt' attributes, which are essential for SEO and accessibility.
+    - Broken internal links, which negatively impact the user experience and site's SEO ranking.
+    """
+    try:
+        response = requests.get(url)
+        dynamic_delay(response)
+        soup = BeautifulSoup(response.content, 'html.parser')
+
+        # Images without alt tags
+        images_without_alt = [img for img in soup.find_all('img') if not img.get('alt')]
+
+        # Broken internal links
+        broken_links = []
+        for link in soup.find_all('a', href=True):
+            link_url = link['href']
+            if not link_url.startswith('http') and not link_url.startswith('#') and not link_url.startswith('mailto:'):
+                full_url = urljoin(url, link_url)
+                try:
+                    link_response = requests.head(full_url)
+                    if link_response.status_code >= 400:
+                        broken_links.append(full_url)
+                except requests.RequestException:
+                    broken_links.append(full_url)
+
+        with tqdm(total=100, desc=f'Yirabot Crawling: {url}') as pbar:
+            for _ in range(100):
+                time.sleep(0.01)
+                pbar.update(1)
+
+        # Printing Results in Table Format
+        console = Console()
+        table = Table(title="SEO Analysis Results", show_header=True, header_style="bold blue")
+        table.add_column("Type", style="dim", width=15)
+        table.add_column("Count", justify="right")
+        table.add_column("Details", overflow="fold")
+
+        table.add_row("Images w/o Alt", str(len(images_without_alt)),
+                      "\n".join(img['src'] for img in images_without_alt[:5]))
+        table.add_row("Broken Links", str(len(broken_links)),
+                      "\n".join(broken_links))
+
+        console.print(table)
+
+    except requests.exceptions.RequestException as e:
+        print(f"Error occurred during SEO analysis: {e}")
+    except KeyboardInterrupt or EOFError:
+        sys.exit("YiraBot: Crawl Aborted")
+
+def dynamic_delay(response):
+    """
+    Dynamically delays the next request based on the server's response.
+    """
+    try:
+        if response.status_code == 429:
+            try:
+                retry_after = int(response.headers.get("Retry-After", 10))
+            except ValueError:
+                retry_after = 10  # Fallback if the header is not an integer
+            print("YiraBot: Website Server Is Overwhelmed, Waiting Before Starting Crawl.")
+            time.sleep(retry_after)
+        else:
+            print("YiraBot: Starting Crawl.")
+            time.sleep(1)  # Default delay for non-429 responses
+    except KeyboardInterrupt or EOFError:
+        sys.exit("YiraBot: Crawl Aborted")
+
+def get_html(url):
+    try:
+        response = requests.get(url)
+        html = response.text
+
+        safe_url = url.replace("https://", "").replace("http://", "").replace("/", "_")
+
+        timestamp = datetime.now().strftime("%Y-%m-%d")
+
+        filename = f"{safe_url}.{timestamp}.html"
+
+        with tqdm(total=100, desc=f'Yirabot Crawling: {url}') as pbar:
+            for _ in range(100):
+                time.sleep(0.001)
+                pbar.update(1)
+
+
+        write_to_file(html, filename, html=True)
+
+        sys.exit("YiraBot: HTML file created.")
+
+    except Exception as e:
+        print(f"YiraBot Error: An error occured while trying to get html. {e}")
+        return
+
+def write_to_file(data, filename, jsonify=False, html=False):
     """
     Writes given data to a file in a formatted key-value pair style.
 
@@ -24,6 +124,17 @@ def write_to_file(data, filename):
     Returns:
     None
     """
+
+    if html:
+        with open(filename, "w") as html_file:
+            html_file.write(data)
+            return
+
+    if jsonify:
+        with open(filename, "w") as json_file:
+           json.dump(data, json_file, indent=4)
+           return
+
     with open(filename, 'w') as file:
         max_key_length = max(len(key) for key in data.keys())  # Find the longest key
         divider = "-" * (max_key_length + 50)  # Adjust the divider length based on the key length
@@ -78,7 +189,7 @@ def parse_sitemap(url):
     except requests.exceptions.RequestException:
         return []
 
-def crawl(url, extract=False):
+def crawl(url, extract=False, extract_json=False):
     """
     Crawls a given URL and extracts various information such as metadata, links, and images.
 
@@ -99,6 +210,7 @@ def crawl(url, extract=False):
 
         try:
             response = requests.get(url, headers=headers)
+            dynamic_delay(response)
             response.raise_for_status()
             soup = BeautifulSoup(response.text, features="html5lib")
 
@@ -140,13 +252,27 @@ def crawl(url, extract=False):
                 safe_url = url.replace("https://", "").replace("http://", "").replace("/", "_")
 
                 # Format the current timestamp
-                timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+                timestamp = datetime.now().strftime("%Y-%m-%d")
 
                 # Generate a safe filename
                 filename = f"{safe_url}.{timestamp}.txt"
 
                 write_to_file(data, filename)
                 sys.exit("YiraBot: file created.")
+
+            if extract_json:
+                safe_url = url.replace("https://", "").replace("http://", "").replace("/", "_")
+
+                timestamp = datetime.now().strftime("%Y-%m-%d")
+
+                filename = f"{safe_url}.{timestamp}.json"
+
+                write_to_file(data, filename, jsonify=True)
+
+                sys.exit("YiraBot: JSON file created.")
+
+
+
 
             console = Console()
 
@@ -199,8 +325,7 @@ def crawl(url, extract=False):
     except KeyboardInterrupt or EOFError:
         sys.exit("YiraBot: Process aborted")
 
-
-def crawl_content(url, extract=False):
+def crawl_content(url, extract=False, extract_json=False):
     """
     Specifically crawls a URL for its main content like paragraphs, headings, and lists.
 
@@ -221,6 +346,7 @@ def crawl_content(url, extract=False):
 
         try:
             response = requests.get(url, headers=headers)
+            dynamic_delay(response)
             response.raise_for_status()
             soup = BeautifulSoup(response.text, features="html5lib")
 
@@ -235,7 +361,7 @@ def crawl_content(url, extract=False):
 
             with tqdm(total=100, desc=f'Yirabot Crawling: {url}') as pbar:
                 for _ in range(100):
-                    time.sleep(0.01)  # Adjust this as needed
+                    time.sleep(0.01)
                     pbar.update(1)
 
             data = {
@@ -254,6 +380,18 @@ def crawl_content(url, extract=False):
 
                 write_to_file(data, filename)
                 sys.exit("YiraBot: file created.")
+
+            if extract_json:
+                safe_url = url.replace("https://", "").replace("http://", "").replace("/", "_")
+
+                timestamp = datetime.now().strftime("%Y-%m-%d")
+
+                filename = f"{safe_url}.{timestamp}.json"
+
+                write_to_file(data, filename, jsonify=True)
+
+                sys.exit("YiraBot: JSON file created.")
+
 
             console = Console()
             table = Table(show_header=True, header_style="bold blue")
@@ -282,6 +420,4 @@ def crawl_content(url, extract=False):
         sys.exit(f"YiraBot: Url is invalid. {url}")
     except KeyboardInterrupt or EOFError:
         sys.exit("YiraBot: Process aborted")
-
-
 

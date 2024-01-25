@@ -50,7 +50,7 @@ pip install YiraBot
 yirabot <command> [arguments]
 ```
 ### Examples
-Displatying the help menu
+Displaying the help menu
 ```bash
 yirabot
 ```
@@ -65,6 +65,18 @@ yirabot crawl example.com -file
 Crawling a webpage to get the content:
 ```bash
 yirabot crawl-content example.com
+```
+Crawling a webpage to get the content and extracting the data to a json file
+```bash
+yirabot crawl-content example.com -json
+```
+Checking a webpage for broken code and issues
+```bash
+yirabot check example.com
+```
+Making an exact copy of a webpage
+```bash
+yirabot get-html example.com
 ```
 # Use YiraBot On Your Own Projects.
 
