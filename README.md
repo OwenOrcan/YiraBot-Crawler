@@ -7,7 +7,7 @@
 [![GitHub stars](https://img.shields.io/github/stars/OwenOrcan/yirabot-crawler.svg?style=social&label=Star&maxAge=2592000)](https://GitHub.com/OwenOrcan/YiraBot-Crawler/stargazers/)
 [![GitHub release](https://img.shields.io/github/release/OwenOrcan/YiraBot-Crawler.svg)](https://GitHub.com/OwenOrcan/YiraBot-Crawler/releases/)
 [![Custom Badge](https://img.shields.io/badge/Visit-Yira.me-red)](https://yira.me)
-
+<a href="https://www.buymeacoffee.com/owenorcan" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
 
 ## Overview
 YiraBot is a sophisticated tool designed for efficient web data collection. Primarily a powerful Python-based command-line tool, it also doubles as an integrable module for Python projects. Ideal for developers, data enthusiasts, and researchers, YiraBot streamlines web crawling with an intuitive interface and robust capabilities.
