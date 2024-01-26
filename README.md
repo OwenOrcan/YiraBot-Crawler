@@ -5,72 +5,49 @@
 [![dependency - YiraBot](https://img.shields.io/badge/v1.0.7.1-PyPI-purple?logo=python&logoColor=white)](https://pypi.org/project/YiraBot)
 [![GitHub stars](https://img.shields.io/github/stars/OwenOrcan/yirabot-crawler.svg?style=social&label=Star&maxAge=2592000)](https://GitHub.com/OwenOrcan/YiraBot-Crawler/stargazers/)
 ## Overview
-YiraBot is a sophisticated tool designed for efficient web data collection. Primarily a powerful Python-based command-line tool, it also doubles as an integrable module for Python projects. Ideal for developers, data enthusiasts, and researchers, YiraBot streamlines web crawling with an intuitive interface and robust capabilities.
+YiraBot isn't just another web scraping tool; it's about making web crawling simple and accessible for everyone. Whether you're a seasoned developer, a data enthusiast, or just dabbling in Python, YiraBot is designed to make your life easier. With its user-friendly command-line interface and Python module flexibility, YiraBot streamlines the process of extracting data from the web, making it a straightforward and enjoyable experience.
 
 ## Key Features
 
-### Command-Line Focus
-- **Intuitive Command-Line Interface**: Execute various tasks through simple yet powerful commands, making web crawling accessible and efficient.
-- **Versatile Usage**: Ideal for quick tasks or complex data extraction processes, all manageable through the command line.
-
+### Command-Line Simplicity
+- **Easy-to-Use Commands:** Experience the ease of web crawling with intuitive and powerful commands.
+- **Versatility for All Tasks:** Whether it's a quick data extraction or a more complex scraping job, YiraBot is up to the task, all from the command line.
 ### Module Integration
-- **Python Library Flexibility**: In addition to its command-line prowess, YiraBot can be imported and used as a Python module, offering extended functionality in Python scripts.
-
+- **Enhanced Scripting Flexibility:** Not just a command-line tool, YiraBot also integrates seamlessly into your Python scripts, expanding your data scraping capabilities.
 ### Ethical and Efficient Crawling
-- **Respect for Robots.txt**: Adheres to ethical scraping standards by complying with website's robots.txt policies.
-- **Rich Data Extraction**: Capable of extracting meta tags, images, links, and parsing sitemaps for comprehensive web analysis.
+- **Adherence to Web Standards:** YiraBot respects the rules of the web by complying with robots.txt policies.
+- **Comprehensive Data Extraction:** From meta tags to images and links, YiraBot is thorough, ensuring you get all the data you need.
+### User Friendly Experience
+- **Hassle-Free Data Export:** Exporting your data is a breeze with YiraBot's straightforward options.
+- **Cross-Platform Compatibility:** YiraBot works smoothly whether you're on Linux, Windows, or macOS.
 
-### User Experience
-- **Data Export Capabilities**: Features include the extraction of data to files for easy analysis and record-keeping.
 
-### Cross-Platform Compatibility
-- **Universal Application**: Works seamlessly across various operating systems.
 
-## Ideal Use Cases
-- **Academic Research**: Gathering data from diverse web sources for scholarly studies.
-- **SEO and Website Audits**: Reviewing meta tags, links, and content for SEO analysis.
-- **Website Monitoring**: Tracking updates or changes across web pages.
-- **Data Gathering for Machine Learning and Analysis**: Collecting web data for machine learning models and data projects.
+## Ideal Uses
+- **Academic Research:** Effortlessly gather data from various web sources.
+- **SEO and Website Analysis:** Conduct comprehensive reviews of website content and SEO elements.
+- **Website Monitoring:** Stay updated with changes and updates on web pages.
+- **Machine Learning Data Collection:** Easily collect data for machine learning models and analysis.
 
-## Installation
+## Getting Started
 
-Ensure Python and Pip is installed on your system before installing YiraBot. Follow these steps for installation:
+Ensure Python and Pip are on your system, then simply run:
 ```bash
 pip install YiraBot
 ```
-## Command-Line Usage
-```bash
-yirabot <command> [arguments]
-```
-### Examples
-Displaying the help menu
+### Command-Line Usage
+Display the help menu:
 ```bash
 yirabot
 ```
-Crawling a webpage:
-```bash
-yirabot crawl example.com
-```
-Crawling a webpage and extracting the data to a file.
-```bash
-yirabot crawl example.com -file
-```
-Crawling a webpage to get the content:
-```bash
-yirabot crawl-content example.com
-```
-Crawling a webpage to get the content and extracting the data to a json file
-```bash
-yirabot crawl-content example.com -json
-```
-Checking a webpage for broken code and issues
-```bash
-yirabot check example.com
-```
-Making an exact copy of a webpage
-```bash
-yirabot get-html example.com
-```
+Explore Yirabot's Capabilities:
+
+- **Basic crawl:** yirabot crawl example.com
+- **Save crawl to a file:** yirabot crawl example.com -file
+- **Extract content:** yirabot crawl-content example.com
+- **Content to JSON:** yirabot crawl-content example.com -json
+- **Check website issues:** yirabot check example.com
+- **Clone a webpage:** yirabot get-html example.com
 # Use YiraBot On Your Own Projects.
 
 ## Usage:
