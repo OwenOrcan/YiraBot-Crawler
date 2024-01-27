@@ -92,6 +92,15 @@ print(crawlable)
 urls = bot.parse_sitemap("https://example.com")
 print(urls)
 ```
+## Contributors and Testers
+
+<img src="https://avatars.githubusercontent.com/u/133255559?v=4" alt="Yigit Ocak" style="border-radius: 50%;" width="100" height="100"/>
+
+**[Yigit Ocak](https://github.com/YigitOcak)**
+
+
+
+
 
 ### Contributing
 Contributions to the YiraBot project are welcomed. Feel free to fork the repository, make your changes, and submit pull requests.
