@@ -1,16 +1,10 @@
 ---
 name: Feature request
-about: Suggest an idea for YiraBot
+about: Suggest an idea or enhancement for YiraBot
 title: ''
 labels: enhancement
 assignees: OwenOrcan
 
----
-
----
-name: Feature Request
-about: Suggest an idea or enhancement for YiraBot
-title: '[FEATURE REQUEST]'
 ---
 
 ## Feature Description

@@ -7,12 +7,6 @@ assignees: OwenOrcan
 
 ---
 
----
-name: Bug Report
-about: Create a report to help us improve
-title: '[BUG]'
----
-
 ## Description
 <!-- A clear and concise description of what the bug is. -->
 
