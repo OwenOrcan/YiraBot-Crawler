@@ -100,9 +100,11 @@ print(urls)
 
 
 
+## Contributions
 
-
-### Contributing
 Contributions to the YiraBot project are welcomed. Feel free to fork the repository, make your changes, and submit pull requests.
+
+All contributors must follow the [Contribution Policy](https://github.com/OwenOrcan/YiraBot-Crawler/discussions/2) to ensure a smooth and collaborative development process.
+
 ### License
 YiraBot is open-sourced software licensed under the [MIT LICENSE](https://github.com/OwenOrcan/YiraBot-Crawler?tab=MIT-1-ov-file).
