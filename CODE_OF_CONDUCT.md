@@ -1,4 +1,5 @@
 # YiraBot Code of Conduct
+![DALL·E 2024-01-23 17 20 51 - A logo for 'YiraBot' designed to fit within the GitHub repository card template, with a 40pt border to ensure no details are cropped  The logo should ](https://github.com/OwenOrcan/YiraBot-Crawler/assets/144565916/1cd607b5-5cfb-42b6-b0af-387725adc96f)
 
 ## Responsible Usage
 
