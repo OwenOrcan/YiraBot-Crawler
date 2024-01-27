@@ -2,14 +2,14 @@ from setuptools import setup, find_packages
 
 setup(
     name='YiraBot',
-    version='1.0.7.2',
+    version='1.0.7.3.1',
     packages=find_packages(),
     install_requires=open('requirements.txt').readlines(),
     author='Owen Orcan',
     author_email='owenorcan@gmail.com',
     url='https://github.com/OwenOrcan/Yirabot-Crawler',
     license='MIT',
-    description='A sophisticated Python module and command-line tool for web crawling',
+    description="YiraBot: Simplifying Web Scraping for All. A user-friendly tool for developers and enthusiasts, offering command-line ease and Python integration. Ideal for research, SEO, and data collection.",
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
 
