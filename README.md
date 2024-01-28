@@ -5,9 +5,10 @@
 
 
 <a href="https://www.buymeacoffee.com/owenorcan" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
-![PyPI - Version](https://img.shields.io/pypi/v/YiraBot?style=for-the-badge&logo=PyPI&link=https%3A%2F%2Fpypi.org%2Fproject%2FYiraBot%2F)
-![PyPI - Downloads](https://img.shields.io/pypi/dm/YiraBot?style=for-the-badge&link=https%3A%2F%2Fpypistats.org%2Fpackages%2Fyirabot)
-![GitHub Repo stars](https://img.shields.io/github/stars/OwenOrcan/YiraBot-Crawler?style=for-the-badge&logo=github&color=pink&link=https%3A%2F%2Fgithub.com%2FOwenOrcan%2FYiraBot-Crawler%2Fstargazers)
+[![PyPI - Version](https://img.shields.io/pypi/v/YiraBot?style=for-the-badge&logo=PyPI)](https://pypi.org/project/YiraBot/)
+[![PyPI - Downloads](https://img.shields.io/pypi/dm/YiraBot?style=for-the-badge)](https://pypistats.org/packages/yirabot)
+[![GitHub Repo stars](https://img.shields.io/github/stars/OwenOrcan/YiraBot-Crawler?style=for-the-badge&logo=github&color=pink)](https://github.com/OwenOrcan/YiraBot-Crawler/stargazers)
+
 
 ## Overview
 YiraBot isn't just another web scraping tool; it's about making web crawling simple and accessible for everyone. Whether you're a seasoned developer, a data enthusiast, or just dabbling in Python, YiraBot is designed to make your life easier. With its user-friendly command-line interface and Python module flexibility, YiraBot streamlines the process of extracting data from the web, making it a straightforward and enjoyable experience.
