@@ -95,13 +95,6 @@ print(crawlable)
 urls = bot.parse_sitemap("https://example.com")
 print(urls)
 ```
-## Contributors and Testers
-
-<img src="https://avatars.githubusercontent.com/u/133255559?v=4" alt="Yigit Ocak" width="100" height="100"/>
-
-**[Yigit Ocak](https://github.com/YigitOcak)**
-
-
 
 ## Contributions
 
@@ -111,3 +104,18 @@ All contributors must follow the [Contribution Policy](https://github.com/OwenOr
 
 ### License
 YiraBot is open-sourced software licensed under the [MIT LICENSE](https://github.com/OwenOrcan/YiraBot-Crawler?tab=MIT-1-ov-file).
+
+## Created By:
+
+<table>
+  <tr>
+    <td align="center">
+      <img src="https://avatars.githubusercontent.com/u/144565916?v=4" alt="Owen Orcan" width="100" height="100"/><br>
+      <a href="https://github.com/OwenOrcan">Owen Orcan</a>
+    </td>
+    <td align="center">
+      <img src="https://avatars.githubusercontent.com/u/133255559?v=4" alt="Yigit Ocak" width="100" height="100"/><br>
+      <a href="https://github.com/YigitOcak">Yigit Ocak</a>
+    </td>
+  </tr>
+</table>
