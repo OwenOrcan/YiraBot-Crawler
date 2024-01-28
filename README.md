@@ -4,7 +4,7 @@
 # [📰 Read the Latest Release Notes](https://github.com/OwenOrcan/YiraBot-Crawler/releases)
 
 
-<a href="https://www.buymeacoffee.com/owenorcan" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
+<a href="https://www.buymeacoffee.com/owenorcan" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: 29px !important;width: 130px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
 [![PyPI - Version](https://img.shields.io/pypi/v/YiraBot?style=for-the-badge&logo=PyPI)](https://pypi.org/project/YiraBot/)
 [![PyPI - Downloads](https://img.shields.io/pypi/dm/YiraBot?style=for-the-badge)](https://pypistats.org/packages/yirabot)
 [![GitHub Repo stars](https://img.shields.io/github/stars/OwenOrcan/YiraBot-Crawler?style=for-the-badge&logo=github&color=pink)](https://github.com/OwenOrcan/YiraBot-Crawler/stargazers)
@@ -97,7 +97,7 @@ print(urls)
 ```
 ## Contributors and Testers
 
-<img src="https://avatars.githubusercontent.com/u/133255559?v=4" alt="Yigit Ocak" style="border-radius: 50%;" width="100" height="100"/>
+<img src="https://avatars.githubusercontent.com/u/133255559?v=4" alt="Yigit Ocak" width="100" height="100"/>
 
 **[Yigit Ocak](https://github.com/YigitOcak)**
 
