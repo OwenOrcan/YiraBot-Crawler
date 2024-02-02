@@ -45,12 +45,11 @@ yirabot
 ```
 Explore Yirabot's Capabilities:
 
-- **Basic crawl:** yirabot crawl example.com
-- **Save crawl to a file:** yirabot crawl example.com -file
-- **Extract content:** yirabot crawl-content example.com
-- **Content to JSON:** yirabot crawl-content example.com -json
-- **Check website issues:** yirabot check example.com
+- **Crawl:** yirabot crawl example.com (-file or -json to extract data)
+- **Scrape:** yirabot scrape example.com (-file or -json to extract data)
+- **Advanced SEO Analysis** yirabot seo example.com
 - **Clone a webpage:** yirabot get-html example.com
+- **Start a Session to use commands on authentication protected pages:** yirabot session
 # Use YiraBot On Your Own Projects.
 
 ## Usage:
