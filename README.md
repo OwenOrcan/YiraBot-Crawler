@@ -4,9 +4,12 @@
 # [📰 Read the Latest Release Notes](https://github.com/OwenOrcan/YiraBot-Crawler/releases)
 
 
-<a href="https://www.buymeacoffee.com/owenorcan" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
-[![dependency - YiraBot](https://img.shields.io/badge/v1.0.7.3-PyPI-purple?logo=python&logoColor=white)](https://pypi.org/project/YiraBot)
-[![GitHub stars](https://img.shields.io/github/stars/OwenOrcan/yirabot-crawler.svg?style=social&label=Star&maxAge=2592000)](https://GitHub.com/OwenOrcan/YiraBot-Crawler/stargazers/)
+<a href="https://www.buymeacoffee.com/owenorcan" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: 29px !important;width: 130px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
+[![PyPI - Version](https://img.shields.io/pypi/v/YiraBot?style=for-the-badge&logo=PyPI)](https://pypi.org/project/YiraBot/)
+[![PyPI - Downloads](https://img.shields.io/pypi/dm/YiraBot?style=for-the-badge)](https://pypistats.org/packages/yirabot)
+[![GitHub Repo stars](https://img.shields.io/github/stars/OwenOrcan/YiraBot-Crawler?style=for-the-badge&logo=github&color=pink)](https://github.com/OwenOrcan/YiraBot-Crawler/stargazers)
+
+
 ## Overview
 YiraBot isn't just another web scraping tool; it's about making web crawling simple and accessible for everyone. Whether you're a seasoned developer, a data enthusiast, or just dabbling in Python, YiraBot is designed to make your life easier. With its user-friendly command-line interface and Python module flexibility, YiraBot streamlines the process of extracting data from the web, making it a straightforward and enjoyable experience.
 
@@ -91,19 +94,27 @@ print(crawlable)
 urls = bot.parse_sitemap("https://example.com")
 print(urls)
 ```
-## Contributors and Testers
-
-<img src="https://avatars.githubusercontent.com/u/133255559?v=4" alt="Yigit Ocak" style="border-radius: 50%;" width="100" height="100"/>
-
-**[Yigit Ocak](https://github.com/YigitOcak)**
-
-
 
 ## Contributions
 
 Contributions to the YiraBot project are welcomed. Feel free to fork the repository, make your changes, and submit pull requests.
 
-All contributors must follow the [Contribution Policy](https://github.com/OwenOrcan/YiraBot-Crawler/discussions/2) to ensure a smooth and collaborative development process.
+All contributors must follow the [Contribution Policy](https://github.com/OwenOrcan/YiraBot-Crawler/blob/master/CONTRIBUTING.md) to ensure a smooth and collaborative development process.
 
 ### License
 YiraBot is open-sourced software licensed under the [MIT LICENSE](https://github.com/OwenOrcan/YiraBot-Crawler?tab=MIT-1-ov-file).
+
+## Developers:
+
+<table>
+  <tr>
+    <td align="center">
+      <img src="https://avatars.githubusercontent.com/u/144565916?v=4" alt="Owen Orcan" width="100" height="100"/><br>
+      <a href="https://github.com/OwenOrcan">Owen Orcan</a>
+    </td>
+    <td align="center">
+      <img src="https://avatars.githubusercontent.com/u/133255559?v=4" alt="Yigit Ocak" width="100" height="100"/><br>
+      <a href="https://github.com/YigitOcak">Yigit Ocak</a>
+    </td>
+  </tr>
+</table>

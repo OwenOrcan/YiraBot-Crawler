@@ -10,8 +10,8 @@ Security updates and patches will be applied only to the most recent version of 
 
 | Version | Supported          |
 | ------- | ------------------ |
-| 1.0.x   | :white_check_mark: |
-| < 1.0   | :x:                |
+| > 1.0.7  | :white_check_mark: |
+| < 1.0.7   | :x:                |
 
 ## Reporting a Vulnerability
 
