@@ -1,0 +1,7 @@
+# ============================================================
+# DEVELOPER LOG
+# Last Changed: February 2
+# What Changed: SEO Functions Improvement, Codebase Cleanup
+# Changed by: OwenOrcan
+# ============================================================
+
