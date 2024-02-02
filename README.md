@@ -105,7 +105,7 @@ All contributors must follow the [Contribution Policy](https://github.com/OwenOr
 ### License
 YiraBot is open-sourced software licensed under the [MIT LICENSE](https://github.com/OwenOrcan/YiraBot-Crawler?tab=MIT-1-ov-file).
 
-## Created By:
+## Developers:
 
 <table>
   <tr>
