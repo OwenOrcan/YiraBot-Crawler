@@ -53,7 +53,7 @@ def is_allowed_by_robots_txt(url):
     rp.read()
     return rp.can_fetch("*", url)
 
-def dynamic_delay(response):
+def dynamic_delay(response, script=False):
     """
     Dynamically delays the next request based on the server's response.
     Parameters:
@@ -64,10 +64,12 @@ def dynamic_delay(response):
     try:
         if response.status_code == 429:
             retry_after = int(response.headers.get("Retry-After", 10))
-            print("YiraBot: Website Server Is Overwhelmed, Waiting Before Starting Crawl.")
+            if not script:
+                print("YiraBot: Website Server Is Overwhelmed, Waiting Before Starting Crawl.")
             time.sleep(retry_after)
         else:
-            print("YiraBot: Starting Crawl.")
+            if not script:
+                print("YiraBot: Starting Crawl.")
             time.sleep(1)  # Default delay for non-429 responses
     except KeyboardInterrupt or EOFError:
         sys.exit("YiraBot: Crawl Aborted")
