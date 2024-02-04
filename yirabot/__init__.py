@@ -1,8 +1,11 @@
+from . import errors
 from .helper_functions import *
 from .data_extraction_functions import *
 from urllib.error import HTTPError
 from requests import RequestException, Timeout
 from bs4 import BeautifulSoup
+import yirabot.errors
+from .data_extraction_functions import parse_sitemap
 
 """
 YiraBot's Python Module Integration.
@@ -11,15 +14,18 @@ Still Under Development
 """
 
 
-
-
 class Crawler:
-    def crawl(self,url,session=None):
+    def __init__(self):
+        self.urls = None
+        self.sitemap_url = None
+
+    def crawl(self, url, session=None, force=False):
         headers = {'User-Agent': get_random_user_agent()}
         try:
-            if not is_allowed_by_robots_txt(url):
-                print("YiraBot: Crawling forbidden by robots.txt")
-                return
+            if not force:
+                if not is_allowed_by_robots_txt(url):
+                    print("YiraBot: Crawling forbidden by robots.txt")
+                    return
 
             response = session.get(url, headers=headers) if session else requests.get(url, headers=headers)
             dynamic_delay(response, script=True)
@@ -31,7 +37,8 @@ class Crawler:
             meta_description_tag = soup.find("meta", {"name": "description"})
             title_tag = soup.find("title")
             og_tags = [str(tag) for tag in soup.find_all("meta", property=lambda x: x and x.startswith("og:"))]
-            twitter_tags = [str(tag) for tag in soup.find_all("meta", attrs={"name": lambda x: x and x.startswith("twitter:")})]
+            twitter_tags = [str(tag) for tag in
+                            soup.find_all("meta", attrs={"name": lambda x: x and x.startswith("twitter:")})]
             canonical_tag = soup.find("link", {"rel": "canonical"})
             internal_links, external_links = extract_links(soup, url)
             images = [img['src'] for img in soup.find_all('img', src=True)]
@@ -49,19 +56,18 @@ class Crawler:
                 'sitemap_urls': parse_sitemap(url)
             }
 
-        except HTTPError as e:
-            print(f"YiraBot: HTTP error occurred: {e}")
+        except HTTPError:
+            raise errors.HTTPError(url)
         except ConnectionError:
-            print("YiraBot: Connection error occurred")
+            raise errors.ConnectionError(url)
         except Timeout:
-            print("YiraBot: Timeout error occurred")
+            raise errors.TimeoutError(url)
         except RequestException:
-            print("YiraBot: An error occurred during the request")
+            raise errors.RequestError(url)
         except Exception as e:
             print(f"YiraBot: An unexpected error occurred: {e}")
 
-
-    def scrape(self, url, session=None):
+    def scrape(self, url, session=None, force=False):
         """
         Specifically crawls a URL for its main content like paragraphs, headings, and lists.
         Parameters:
@@ -72,9 +78,10 @@ class Crawler:
         """
         headers = {'User-Agent': get_random_user_agent()}
         try:
-            if not is_allowed_by_robots_txt(url):
-                print("YiraBot: Crawling forbidden by robots.txt")
-                return
+            if not force:
+                if not is_allowed_by_robots_txt(url):
+                    print("YiraBot: Crawling forbidden by robots.txt")
+                    return
 
             response = session.get(url, headers=headers) if session else requests.get(url, headers=headers)
             dynamic_delay(response, script=True)
@@ -88,22 +95,33 @@ class Crawler:
             headings = [h.get_text().strip() for h in soup.find_all(['h1', 'h2', 'h3', 'h4', 'h5', 'h6'])]
             lists = [ul.get_text().strip() for ul in soup.find_all(['ul', 'ol'])]
 
-            return {
+            data = {
                 'meta_description': meta_description_tag.get("content") if meta_description_tag else None,
                 'title': title_tag.get_text() if title_tag else None,
                 'paragraphs': paragraphs,
                 'headings': headings,
                 'lists': lists
             }
+            return data
 
-        except HTTPError as e:
-            print(f"YiraBot: HTTP error occurred: {e}")
+        except HTTPError:
+            raise errors.HTTPError
         except ConnectionError:
-            print("YiraBot: Connection error occurred")
+            raise errors.ConnectionError
         except Timeout:
-            print("YiraBot: Timeout error occurred")
+            raise errors.TimeoutError
         except RequestException:
-            print("YiraBot: An error occurred during the request")
+            raise errors.RequestError
         except Exception as e:
             print(f"YiraBot: An unexpected error occurred: {e}")
 
+    def validate_routes(self, sitemap_url):
+        self.sitemap_url = sitemap_url
+        self.urls = parse_sitemap(self.sitemap_url)
+        responses = {}
+
+        for url in self.urls:
+            response = requests.head(url, allow_redirects=True)
+            response_code = response.status_code
+            responses[url] = response_code
+        return responses

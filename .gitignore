@@ -7,3 +7,4 @@ dist/
 YiraBot.egg-info/
 env/
 changelog/
+yirabot/tests/

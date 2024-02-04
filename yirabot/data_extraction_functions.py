@@ -98,10 +98,22 @@ def parse_sitemap(url):
     list: A list of URLs found in the sitemap.
     """
     sitemap_url = url + "/sitemap.xml"
+    sitemap_url2 = url + "/static/sitemap.xml"
     try:
         response = requests.get(sitemap_url)
+        response.raise_for_status()
         if response.status_code == 200:
             soup = BeautifulSoup(response.content, 'xml')
             return [element.text for element in soup.find_all("loc")]
+        else:
+            return [] # TODO - MAKE ERROR FOR THIS SITUATION TO RAISE
+    except Exception:
+        response = requests.get(sitemap_url2)
+        if response.status_code == 200:
+            soup = BeautifulSoup(response.content, 'xml')
+            return [element.text for element in soup.find_all("loc")]
+        else:
+            return []
+
     except requests.exceptions.RequestException:
         return []
