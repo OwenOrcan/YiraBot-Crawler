@@ -43,7 +43,7 @@ class Crawler:
             internal_links, external_links = extract_links(soup, url)
             images = [img['src'] for img in soup.find_all('img', src=True)]
 
-            return {
+            data = {
                 'favicon': favicon_tag.get("href") if favicon_tag else None,
                 'meta_description': meta_description_tag.get("content") if meta_description_tag else None,
                 'title': title_tag.get_text() if title_tag else None,
@@ -55,6 +55,11 @@ class Crawler:
                 'image_urls': images,
                 'sitemap_urls': parse_sitemap(url)
             }
+            if type(data) is None:
+                print("Server did not response, trying again.")
+                self.crawl(url, session, force)
+            else:
+                return data
 
         except HTTPError:
             raise errors.HTTPError(url)
@@ -102,7 +107,11 @@ class Crawler:
                 'headings': headings,
                 'lists': lists
             }
-            return data
+            if type(data) is None:
+                print("Server did not response, trying again.")
+                self.scrape(url, session, force)
+            else:
+                return data
 
         except HTTPError:
             raise errors.HTTPError
@@ -117,7 +126,16 @@ class Crawler:
 
     def validate_routes(self, sitemap_url):
         self.sitemap_url = sitemap_url
-        self.urls = parse_sitemap(self.sitemap_url)
+        try:
+            self.urls = parse_sitemap(self.sitemap_url, script=True)
+        except ConnectionError:
+            raise yirabot.errors.ConnectionError(sitemap_url)
+        except HTTPError:
+            raise yirabot.errors.HTTPError(sitemap_url)
+        except TimeoutError:
+            raise yirabot.errors.TimeoutError(sitemap_url)
+        except RequestException:
+            raise yirabot.errors.RequestError(sitemap_url)
         responses = {}
 
         for url in self.urls:
