@@ -4,6 +4,16 @@
 # [📰 Read the Latest Release Notes](https://github.com/OwenOrcan/YiraBot-Crawler/releases)
 
 
+### **💻Development Status on [1.0.9](https://github.com/OwenOrcan/YiraBot-Crawler/blob/python-module-development/yirabot/__init__.py)**
+
+| Feature | Status         |
+| ------- | ------------------ |
+| Crawler class and methods | :white_check_mark: (some tweaking needed) |
+| New Feature to validate routes | ✅ |
+| SEO class and methods  | :x:                |
+| General crawling and scraping functions | :x: |
+
+
 <a href="https://www.buymeacoffee.com/owenorcan" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: 29px !important;width: 130px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
 [![PyPI - Version](https://img.shields.io/pypi/v/YiraBot?style=for-the-badge&logo=PyPI)](https://pypi.org/project/YiraBot/)
 [![PyPI - Downloads](https://img.shields.io/pypi/dm/YiraBot?style=for-the-badge)](https://pypistats.org/packages/yirabot)
