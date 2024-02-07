@@ -7,4 +7,4 @@ lxml==5.1.0
 colorama==0.4.6
 certifi==2023.11.17
 urllib3==2.1.0
-nltk
+nltk==3.8.1

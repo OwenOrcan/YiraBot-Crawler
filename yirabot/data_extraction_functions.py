@@ -2,7 +2,6 @@ from urllib.parse import urljoin
 import requests
 from bs4 import BeautifulSoup
 
-
 # ============================================================
 # DATA EXTRACTION FUNCTIONS
 # Functions that handle the extraction of data from web pages.
@@ -89,7 +88,7 @@ def extract_links(soup, base_url):
 
     return internal_links, external_links
 
-def parse_sitemap(url):
+def parse_sitemap(url, script=False):
     """
     Parses the sitemap of a given URL and returns the list of URLs found in it.
     Parameters:
@@ -99,6 +98,12 @@ def parse_sitemap(url):
     """
     sitemap_url = url + "/sitemap.xml"
     sitemap_url2 = url + "/static/sitemap.xml"
+    if script:
+        response = requests.get(url)
+        response.raise_for_status()
+        if response.status_code == 200:
+            soup = BeautifulSoup(response.content, 'xml')
+            return [element.text for element in soup.find_all("loc")]
     try:
         response = requests.get(sitemap_url)
         response.raise_for_status()
@@ -106,14 +111,14 @@ def parse_sitemap(url):
             soup = BeautifulSoup(response.content, 'xml')
             return [element.text for element in soup.find_all("loc")]
         else:
-            return [] # TODO - MAKE ERROR FOR THIS SITUATION TO RAISE
+            return ["NO SITEMAP FOUND IN WEBSITE"]
     except Exception:
         response = requests.get(sitemap_url2)
         if response.status_code == 200:
             soup = BeautifulSoup(response.content, 'xml')
             return [element.text for element in soup.find_all("loc")]
         else:
-            return []
+            return ["NO SITEMAP FOUND IN WEBSITE"]
 
     except requests.exceptions.RequestException:
         return []
