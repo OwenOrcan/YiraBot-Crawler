@@ -4,7 +4,7 @@
 # [📰 Read the Latest Release Notes](https://github.com/OwenOrcan/YiraBot-Crawler/releases)
 
 
-### Development Status on [YiraBot 1.0.9](https://github.com/OwenOrcan/YiraBot-Crawler/blob/python-module-development/yirabot/__init__.py)
+### Development Status on [YiraBot 1.0.9](https://github.com/OwenOrcan/YiraBot-Crawler/blob/python-module-development/1.0.9.md)
 
 | Feature | Status | Progress |
 | ------- | ------ | -------- |
