@@ -4,16 +4,16 @@ from .data_extraction_functions import *
 from urllib.error import HTTPError
 from requests import RequestException, Timeout
 from bs4 import BeautifulSoup
-import yirabot.errors
 from .data_extraction_functions import parse_sitemap
 
 """
-YiraBot's Python Module Integration.
+YiraBots Python Module Integration.
 
 Still Under Development
 """
 
 
+# noinspection PyUnboundLocalVariable
 class Crawler:
     def __init__(self):
         self.urls = None
@@ -24,8 +24,7 @@ class Crawler:
         try:
             if not force:
                 if not is_allowed_by_robots_txt(url):
-                    print("YiraBot: Crawling forbidden by robots.txt")
-                    return
+                    raise errors.RobotsError(url)
 
             response = session.get(url, headers=headers) if session else requests.get(url, headers=headers)
             dynamic_delay(response, script=True)
@@ -56,21 +55,18 @@ class Crawler:
                 'sitemap_urls': parse_sitemap(url)
             }
             if type(data) is None:
-                print("Server did not response, trying again.")
                 self.crawl(url, session, force)
             else:
                 return data
 
         except HTTPError:
-            raise errors.HTTPError(url)
+            raise errors.HTTPError(response.status_code)
         except ConnectionError:
             raise errors.ConnectionError(url)
         except Timeout:
             raise errors.TimeoutError(url)
         except RequestException:
             raise errors.RequestError(url)
-        except Exception as e:
-            print(f"YiraBot: An unexpected error occurred: {e}")
 
     def scrape(self, url, session=None, force=False):
         """
@@ -85,8 +81,7 @@ class Crawler:
         try:
             if not force:
                 if not is_allowed_by_robots_txt(url):
-                    print("YiraBot: Crawling forbidden by robots.txt")
-                    return
+                    raise errors.RobotsError(url)
 
             response = session.get(url, headers=headers) if session else requests.get(url, headers=headers)
             dynamic_delay(response, script=True)
@@ -121,21 +116,19 @@ class Crawler:
             raise errors.TimeoutError
         except RequestException:
             raise errors.RequestError
-        except Exception as e:
-            print(f"YiraBot: An unexpected error occurred: {e}")
 
     def validate_routes(self, sitemap_url):
         self.sitemap_url = sitemap_url
         try:
             self.urls = parse_sitemap(self.sitemap_url, script=True)
         except ConnectionError:
-            raise yirabot.errors.ConnectionError(sitemap_url)
+            raise errors.ConnectionError(sitemap_url)
         except HTTPError:
-            raise yirabot.errors.HTTPError(sitemap_url)
+            raise errors.HTTPError(sitemap_url)
         except TimeoutError:
-            raise yirabot.errors.TimeoutError(sitemap_url)
+            raise errors.TimeoutError(sitemap_url)
         except RequestException:
-            raise yirabot.errors.RequestError(sitemap_url)
+            raise errors.RequestError(sitemap_url)
         responses = {}
 
         for url in self.urls:
