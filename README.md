@@ -8,7 +8,7 @@
 
 | Feature | Status | Progress |
 | ------- | ------ | -------- |
-| Crawler class and methods | In Progress (some tweaking needed) | ▮▮▮▮▮▯▯▯▯▯ (50%) |
+| Crawler class and methods | Completed | ▮▮▮▮▮▮▮▮▮▮ (100%) |
 | New Feature to validate routes | Completed | ▮▮▮▮▮▮▮▮▮▮ (100%) |
 | SEO class and methods | Not Started | ▯▯▯▯▯▯▯▯▯▯ (0%) |
 | General crawling and scraping functions | Not Started | ▯▯▯▯▯▯▯▯▯▯ (0%) |
