@@ -80,6 +80,7 @@ class Yirabot:
 
             soup = BeautifulSoup(response.text, features="html5lib")
 
+            meta_description_tag = soup.find("meta", {"name": "description"})
             favicon_tag = soup.find("link", {"rel": "icon"})
             title_tag = soup.find("title")
             og_tags = [str(tag) for tag in soup.find_all("meta", property=lambda x: x and x.startswith("og:"))]
@@ -91,6 +92,7 @@ class Yirabot:
 
             data = {
                 'favicon': favicon_tag.get("href") if favicon_tag else None,
+                'meta_description': meta_description_tag.get("content") if meta_description_tag else None,
                 'title': title_tag.get_text() if title_tag else None,
                 'open_graph_tags': og_tags,
                 'twitter_card_tags': twitter_tags,
@@ -135,14 +137,12 @@ class Yirabot:
 
             soup = BeautifulSoup(response.text, features="html5lib")
 
-            meta_description_tag = soup.find("meta", {"name": "description"})
             title_tag = soup.find("title")
             paragraphs = [p.get_text().strip() for p in soup.find_all('p')]
             headings = [h.get_text().strip() for h in soup.find_all(['h1', 'h2', 'h3', 'h4', 'h5', 'h6'])]
             lists = [ul.get_text().strip() for ul in soup.find_all(['ul', 'ol'])]
 
             data = {
-                'meta_description': meta_description_tag.get("content") if meta_description_tag else None,
                 'title': title_tag.get_text() if title_tag else None,
                 'paragraphs': paragraphs,
                 'headings': headings,

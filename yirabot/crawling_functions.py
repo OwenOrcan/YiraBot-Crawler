@@ -13,7 +13,7 @@ from .seo_functions import *
 # ============================================================
 
 
-def crawl(url, extract=False, extract_json=False, session=None):
+def crawl(url, extract=False, extract_json=False, session=None, mobile=False):
     """
     Crawls a given URL and extracts various information such as metadata, links, and images.
     Parameters:
@@ -24,7 +24,10 @@ def crawl(url, extract=False, extract_json=False, session=None):
     Returns:
     None
     """
-    headers = {'User-Agent': get_random_user_agent()}
+    if mobile:
+        headers = {"User-Agent": get_random_user_agent(mobile=True)}
+    else:
+        headers = {'User-Agent': get_random_user_agent()}
     try:
         if not is_allowed_by_robots_txt(url):
             print("YiraBot: Crawling forbidden by robots.txt")
