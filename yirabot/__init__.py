@@ -1,10 +1,12 @@
 from . import errors
+from .seo_functions import *
 from .helper_functions import *
 from .data_extraction_functions import *
 from urllib.error import HTTPError
 from requests import RequestException, Timeout
 from bs4 import BeautifulSoup
 from .data_extraction_functions import parse_sitemap
+
 
 """
 YiraBots Python Module Integration.
@@ -14,10 +16,56 @@ Still Under Development
 
 
 # noinspection PyUnboundLocalVariable
-class Crawler:
+class Yirabot:
     def __init__(self):
         self.urls = None
         self.sitemap_url = None
+
+    def seo_analysis(self, url, session=None):
+        try:
+            response = session.get(url) if session else requests.get(url)
+            soup = BeautifulSoup(response.content, 'html.parser')
+
+            title_length, title_status = analyze_title(soup)
+            meta_desc_length, meta_desc_status = analyze_meta_description(soup)
+            headings, heading_structure_status = analyze_headings(soup)
+            images_without_alt = analyze_images_for_alt_text(soup)
+
+            # Combine texts for keyword analysis
+            combined_text = get_combined_text(soup)
+            keyword_results = keyword_analysis(combined_text)
+
+            # Mobile Responsiveness Check
+            is_responsive, responsiveness_message = check_mobile_responsiveness(url)
+
+            # Social Media Integration Check
+            social_media_integration = check_social_media_integration(url)
+
+            # Language Check
+            website_language = check_website_language(url)
+
+
+            data = {
+                'title_length': title_length,
+                'title_status': title_status,
+                'meta_desc_length': meta_desc_length,
+                'meta_desc_status': meta_desc_status,
+                'heading_structure_status': heading_structure_status,
+                'images_without_alt': images_without_alt,
+                'is_responsive': is_responsive,
+                'social_media_integration': social_media_integration,
+                'website_language': website_language
+            }
+            return data
+
+        except ConnectionError:
+            raise errors.ConnectionError(url)
+        except Timeout:
+            raise errors.TimeoutError(url)
+        except HTTPError:
+            raise errors.HTTPError(response.status_code)
+        except RequestException:
+            raise errors.RequestError(url)
 
     def crawl(self, url, session=None, force=False):
         headers = {'User-Agent': get_random_user_agent()}
@@ -33,7 +81,6 @@ class Crawler:
             soup = BeautifulSoup(response.text, features="html5lib")
 
             favicon_tag = soup.find("link", {"rel": "icon"})
-            meta_description_tag = soup.find("meta", {"name": "description"})
             title_tag = soup.find("title")
             og_tags = [str(tag) for tag in soup.find_all("meta", property=lambda x: x and x.startswith("og:"))]
             twitter_tags = [str(tag) for tag in
@@ -44,7 +91,6 @@ class Crawler:
 
             data = {
                 'favicon': favicon_tag.get("href") if favicon_tag else None,
-                'meta_description': meta_description_tag.get("content") if meta_description_tag else None,
                 'title': title_tag.get_text() if title_tag else None,
                 'open_graph_tags': og_tags,
                 'twitter_card_tags': twitter_tags,
@@ -117,7 +163,7 @@ class Crawler:
         except RequestException:
             raise errors.RequestError
 
-    def validate_routes(self, sitemap_url):
+    def validate(self, sitemap_url):
         self.sitemap_url = sitemap_url
         try:
             self.urls = parse_sitemap(self.sitemap_url, script=True)
