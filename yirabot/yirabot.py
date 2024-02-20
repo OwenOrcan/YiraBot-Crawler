@@ -56,11 +56,11 @@ def process_crawl_command(command, argument):
         url = validate_url(argument)
         flag = sys.argv[3] if len(sys.argv) > 3 else None
 
-        if flag not in ["-file", "-json", None]:
+        if flag not in ["-file", "-json", "-mobile", None]:
             sys.exit(f"YiraBot: Unrecognized Flag: {flag}")
 
         if command == "crawl":
-            crawl(url, extract=(flag == "-file"), extract_json=(flag == "-json"))
+            crawl(url, extract=(flag == "-file"), extract_json=(flag == "-json"),mobile=(flag == "-mobile") )
         elif command == "scrape":
             crawl_content(url, extract=(flag == "-file"), extract_json=(flag == "-json"))
 
