@@ -46,14 +46,12 @@ def extract_content_data(soup):
     Returns:
     dict: Extracted main content data.
     """
-    meta_description_tag = soup.find("meta", {"name": "description"})
     title_tag = soup.find("title")
     paragraphs = [p.get_text().strip() for p in soup.find_all('p')]
     headings = [h.get_text().strip() for h in soup.find_all(['h1', 'h2', 'h3', 'h4', 'h5', 'h6'])]
     lists = [ul.get_text().strip() for ul in soup.find_all(['ul', 'ol'])]
 
     return {
-        'meta_description': meta_description_tag.get("content") if meta_description_tag else None,
         'title': title_tag.get_text() if title_tag else None,
         'paragraphs': paragraphs,
         'headings': headings,
