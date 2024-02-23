@@ -4,7 +4,7 @@ from colorama import Fore
 
 def help():
     HELP_MESSAGE = Fore.RED + """
-YiraBot Web Crawler v1.0.8
+YiraBot Web Crawler v1.0.9
 ----------------------------------
 Command Line Web Crawling, Web Scraping and SEO Analysis Tool""" + Fore.MAGENTA + """
 
@@ -18,6 +18,7 @@ crawl
     - Flags:
         -file: Saves data to a text file.
         -json: Saves data to a JSON file.
+        -mobile: Uses a mobile User Agent to crawl
 
 seo
     - SEO Analysis: Analyzes SEO-related elements of the specified URL.
@@ -27,7 +28,8 @@ scrape
     - Flags:
         -file: Saves content data to a text file.
         -json: Saves content data to a JSON file.
-
+        -mobile: Uses a mobile User Agent to scrape
+        
 get-html
     - HTML Copy: Downloads and saves the complete HTML of the specified URL.
 

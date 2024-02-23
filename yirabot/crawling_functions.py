@@ -15,196 +15,196 @@ from .seo_functions import *
 
 def crawl(url, extract=False, extract_json=False, session=None, mobile=False):
     """
-    Crawls a given URL and extracts various information such as metadata, links, and images.
-    Parameters:
-    url (str): The URL to be crawled.
-    extract (bool): If True, extracts data to a file. Defaults to False.
-    extract_json (bool): If True, extracts data to a JSON file. Defaults to False.
-    session (Session, optional): Requests session for authenticated crawling.
+    Crawls a given URL, extracting various information like metadata, links, and images,
+    and optionally saves the data to a file in text or JSON format.
+
+    Args:
+        url (str): The URL to be crawled.
+        extract (bool): If True, saves extracted data in text format. Defaults to False.
+        extract_json (bool): If True, saves extracted data in JSON format. Defaults to False.
+        session (Session, optional): A session object for authenticated requests.
+        mobile (bool): If True, uses a mobile user agent for the request.
+
     Returns:
-    None
+        None: Outputs to the console or files, based on parameters.
     """
-    if mobile:
-        headers = {"User-Agent": get_random_user_agent(mobile=True)}
-    else:
-        headers = {'User-Agent': get_random_user_agent()}
+    # Set user agent based on the 'mobile' flag
+    headers = {'User-Agent': get_random_user_agent(mobile=mobile)}
+
     try:
+        # Check if crawling is allowed by robots.txt
         if not is_allowed_by_robots_txt(url):
             print("YiraBot: Crawling forbidden by robots.txt")
             return
 
+        # Make the request using a session if provided, else use requests.get
         response = session.get(url, headers=headers) if session else requests.get(url, headers=headers)
+
+        # Handle server-induced delays
         dynamic_delay(response)
+
+        # Raise an exception for bad responses
         response.raise_for_status()
 
+        # Parse the response content with BeautifulSoup
         soup = BeautifulSoup(response.text, features="html5lib")
+
+        # Extract data from the parsed HTML
         data = extract_crawl_data(soup, url)
 
+        # Save or display the extracted data
         if extract or extract_json:
             save_crawl_data(data, url, extract, extract_json)
-            return
+        else:
+            display_crawl_data(data)
 
-        display_crawl_data(data)
-    except HTTPError as e:
-        print(f"YiraBot: HTTP error occurred: {e}")
-    except ConnectionError:
-        print("YiraBot: Connection error occurred")
-    except Timeout:
-        print("YiraBot: Timeout error occurred")
-    except RequestException:
-        print("YiraBot: An error occurred during the request")
+    except (HTTPError, ConnectionError, Timeout, RequestException) as e:
+        print(f"YiraBot: Error occurred: {e}")
     except Exception as e:
         print(f"YiraBot: An unexpected error occurred: {e}")
 
 
-def crawl_content(url, extract=False, extract_json=False, session=None):
+def crawl_content(url, extract=False, extract_json=False, session=None, mobile=False):
     """
-    Specifically crawls a URL for its main content like paragraphs, headings, and lists.
-    Parameters:
-    url (str): The URL to be crawled for content.
-    extract (bool): If True, extracts data to a file. Defaults to False.
-    extract_json (bool): If True, extracts data to a JSON file. Defaults to False.
-    session (Session, optional): Requests session for authenticated crawling.
+    Crawls a URL specifically for its main content, such as paragraphs, headings, and lists,
+    and optionally saves the data in text or JSON format.
+
+    Args:
+        url (str): The URL to be crawled for content.
+        extract (bool): If True, saves extracted data in text format. Defaults to False.
+        extract_json (bool): If True, saves extracted data in JSON format. Defaults to False.
+        session (requests.Session, optional): A session object for authenticated requests.
+
     Returns:
-    None
+        None: Outputs to the console or files, based on parameters.
     """
-    headers = {'User-Agent': get_random_user_agent()}
+    headers = {'User-Agent': get_random_user_agent(mobile=mobile)}
+
     try:
+        # Check if the URL is allowed by robots.txt
         if not is_allowed_by_robots_txt(url):
             print("YiraBot: Crawling forbidden by robots.txt")
             return
 
+        # Perform the request with the provided session or a new session
         response = session.get(url, headers=headers) if session else requests.get(url, headers=headers)
+
+        # Handle server-induced delays
         dynamic_delay(response)
+
+        # Check for successful response
         response.raise_for_status()
 
+        # Parse the response content
         soup = BeautifulSoup(response.text, features="html5lib")
+
+        # Extract content data from the parsed HTML
         data = extract_content_data(soup)
 
+        # Decide whether to save or display the extracted data
         if extract or extract_json:
             save_crawl_data(data, url, extract, extract_json)
-            return
+        else:
+            display_crawl_data(data)
 
-        display_crawl_data(data)
-    except HTTPError as e:
-        print(f"YiraBot: HTTP error occurred: {e}")
-    except ConnectionError:
-        print("YiraBot: Connection error occurred")
-    except Timeout:
-        print("YiraBot: Timeout error occurred")
-    except RequestException:
-        print("YiraBot: An error occurred during the request")
+    except (HTTPError, ConnectionError, Timeout, RequestException) as e:
+        print(f"YiraBot: Error occurred: {e}")
     except Exception as e:
         print(f"YiraBot: An unexpected error occurred: {e}")
-
 
 def crawl_protected_page():
     """
-    Handles the crawling of protected web pages that require authentication.
+    Handles the crawling of protected web pages by facilitating user authentication
+    and offering a choice of crawling methods for protected content.
     """
     try:
         session = requests.Session()
         print("YiraBot: Session Started.")
 
-        # Function to handle the login process
         def login():
-            login_url = input("Enter the login page URL: ")
-            if login_url.startswith("http://"):
-                sys.exit(f"YiraBot: Cannot use authentication on HTTP websites, Not Secure.")
+            """
+            Prompts the user for login details and constructs the credentials payload.
+            """
+            login_url = input("Enter the login page URL: ").strip()
             if not login_url.startswith("https://"):
-                login_url = "https://" + login_url
+                sys.exit("YiraBot: Secure HTTPS connection required for login.")
 
-            expected_response = input("Enter the success redirect URL: ")
-            if "/" not in expected_response:
-                expected_response += "/"
+            expected_response = input("Enter the success redirect URL: ").strip()
             if not expected_response.startswith("https://"):
                 expected_response = "https://" + expected_response
 
-            username_field = input("Enter the username form input name: ")
-            password_field = input("Enter the password form input name: ")
-            username = input("Enter your username: ")
-            password = getpass("Enter your password: ")
-
-            return login_url, expected_response, {
-                username_field: username,
-                password_field: password
+            credentials = {
+                input("Enter the username form input name: ").strip(): input("Enter your username: ").strip(),
+                input("Enter the password form input name: ").strip(): getpass("Enter your password: ").strip()
             }
-    except KeyboardInterrupt:
-        sys.exit("\nYiraBot: Session Stopped")
 
+            return login_url, expected_response, credentials
 
-    # Attempt to log in
-    try:
         login_url, expected_response, credentials = login()
         response = session.post(login_url, data=credentials)
         response.raise_for_status()
-    except HTTPError as e:
-        print(f"Login failed, HTTP error: {e}")
-        return
-    except ConnectionError:
-        print("Login failed, connection error.")
-        return
-    except Timeout:
-        print("Login failed, timeout error.")
-        return
-    except RequestException:
-        print("Login failed, request error.")
-        return
+
+        if not login_successful(response, expected_response):
+            print("Login failed, please check your credentials.")
+            return
+
+        print(f"YiraBot: Successfully logged into {extract_domain(login_url)}")
+
+        while True:
+            protected_url = input("Enter the URL of the protected page: ").strip()
+            if not protected_url.startswith("https://"):
+                print("YiraBot: Secure HTTPS connection required.")
+                continue
+
+            crawl_choice = input("Select Crawl Method:\n1: Crawl\n2: Scrape\n3: SEO\nInput: ")
+            try:
+                crawl_choice = int(crawl_choice)
+                if crawl_choice == 1:
+                    crawl(protected_url, session=session)
+                elif crawl_choice == 2:
+                    crawl_content(protected_url, session=session)
+                elif crawl_choice == 3:
+                    seo_error_analysis(protected_url, session=session)
+                else:
+                    print("YiraBot: Invalid input, please enter a number from the choices.")
+            except ValueError:
+                print("YiraBot: Please enter a valid number for the crawl choice.")
     except KeyboardInterrupt:
         print("\nYiraBot: Session Stopped")
-        return
-
-
-    # Check if login was successful
-    if not login_successful(response, expected_response):
-        print("Login failed, please check your credentials.")
-        return
-
-    print(f"YiraBot: Successfully logged into {extract_domain(login_url)}")
-    print("YiraBot: Use CTRL-C to stop session.")
-
-    # Crawling loop for protected pages
-    while True:
-        try:
-            protected_url = input("Enter the URL of the protected page: ")
-            if protected_url.startswith("http://"):
-                print(f"YiraBot: Cannot use authentication on HTTP websites, Not Secure.")
-                continue
-            if not protected_url.startswith("https://"):
-                protected_url = "https://" + protected_url
-
-            crawl_choice = input("- Select Crawl Method:\n1:  Crawl\n2: Scrape\n3: SEO\nInput: ")
-            crawl_choice = int(crawl_choice)
-            if crawl_choice == 1:
-                crawl(protected_url, session=session)
-            elif crawl_choice == 2:
-                crawl_content(protected_url, session=session)
-            elif crawl_choice == 3:
-                seo_error_analysis(protected_url, session=session)
-            else:
-                print("YiraBot: Unexpected Input.")
-        except ValueError:
-            print("YiraBot: Please enter a valid number for crawl choice.")
-        except KeyboardInterrupt:
-            print("\nYiraBot: Session Stopped")
-            break
 
 
 def get_html(url):
     """
-    Downloads the complete HTML of the specified URL and saves it as a file.
-    Parameters:
-    url (str): URL of the webpage to download.
+    Downloads the complete HTML content of the specified URL and saves it as an HTML file.
+
+    Args:
+        url (str): The URL of the webpage to download.
+
+    Returns:
+        None: The function saves the HTML content to a file and outputs the file name.
     """
     try:
         response = requests.get(url)
+        response.raise_for_status()  # Ensure the request was successful
         html = response.text
+
+        # Create a safe filename from the URL and current timestamp
         safe_url = url.replace("https://", "").replace("http://", "").replace("/", "_")
         timestamp = datetime.now().strftime("%Y-%m-%d")
         filename = f"{safe_url}.{timestamp}.html"
 
+        # Use the write_to_file function, assuming it supports HTML content
         write_to_file(html, filename, html=True)
 
         print(f"YiraBot: HTML file '{filename}' created.")
-    except Exception as e:
+
+    except requests.exceptions.HTTPError as e:
+        print(f"YiraBot Error: HTTP error occurred while trying to get HTML. {e}")
+    except requests.exceptions.ConnectionError:
+        print("YiraBot Error: Connection error occurred while trying to get HTML.")
+    except requests.exceptions.Timeout:
+        print("YiraBot Error: Timeout occurred while trying to get HTML.")
+    except requests.exceptions.RequestException as e:
         print(f"YiraBot Error: An error occurred while trying to get HTML. {e}")
+    except Exception as e:
+        print(f"YiraBot Error: An unexpected error occurred. {e}")

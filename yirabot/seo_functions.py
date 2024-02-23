@@ -1,12 +1,10 @@
 import re
 from collections import Counter, defaultdict
-from urllib.parse import  unquote
+from urllib.parse import unquote
 import requests
 from bs4 import BeautifulSoup
 from rich import print
-from rich.console import Console
-from rich.table import Table
-
+from .display_functions import display_seo_results
 
 # ============================================================
 # SEO ANALYSIS FUNCTIONS
@@ -93,39 +91,6 @@ def check_link_status(url, session=None):
         return False, response.status_code, "OK"
     except requests.RequestException as e:
         return True, None, f"Error: {e}"
-
-
-def display_seo_results(title_length, title_status, meta_desc_length, meta_desc_status, keyword_results, headings,
-                        heading_structure_status, images_without_alt,is_responsive, responsiveness_message, social_media_integration, website_language):
-    console = Console()
-    table = Table(title="SEO Analysis Results", show_header=True, header_style="bold blue")
-
-    table.add_column("Aspect", style="dim", width=20)
-    table.add_column("Details/Length", justify="right")
-    table.add_column("Status/Value", overflow="fold")
-
-    table.add_row("Title Tag", str(title_length), title_status)
-    table.add_row("Meta Description", str(meta_desc_length), meta_desc_status)
-    keywords_display = ', '.join([f"{word} ({count})" for word, count in keyword_results])
-    table.add_row("Top Keywords", "N/A", keywords_display)
-
-    headings_display = ', '.join([f"{tag}: {count}" for tag, count in headings.items()])
-    if headings_display is None or headings_display == 0:
-        headings_display = "No Headers"
-    table.add_row("Headings", headings_display, heading_structure_status)
-
-    no_alt_display = ', '.join(images_without_alt) if images_without_alt else "All images have alt text"
-    table.add_row("Images without Alt Text", str(len(images_without_alt)), no_alt_display)
-
-    table.add_row("Mobile Responsiveness", "N/A", responsiveness_message)
-
-    social_media_str = ", ".join([platform for platform, integrated in social_media_integration.items() if integrated])
-    social_media_str = social_media_str if social_media_str else "No Social Media Integration Detected"
-    table.add_row("Social Media Integration", "N/A", social_media_str)
-
-    table.add_row("Website Language", "N/A", website_language)
-
-    console.print(table)
 
 
 def keyword_analysis(text):

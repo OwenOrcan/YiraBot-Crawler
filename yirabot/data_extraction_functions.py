@@ -2,30 +2,41 @@ from urllib.parse import urljoin
 import requests
 from bs4 import BeautifulSoup
 
-# ============================================================
-# DATA EXTRACTION FUNCTIONS
-# Functions that handle the extraction of data from web pages.
-# ============================================================
 
 def extract_crawl_data(soup, url):
     """
-    Extracts data from the BeautifulSoup object created from the crawled URL.
+    Extracts data from a BeautifulSoup object created from a crawled URL, including metadata,
+    social media tags, links, and images.
+
     Parameters:
-    soup (BeautifulSoup): BeautifulSoup object of the crawled page.
-    url (str): The URL being crawled.
+    - soup (BeautifulSoup): BeautifulSoup object of the crawled page.
+    - url (str): The URL being crawled.
+
     Returns:
-    dict: Extracted data from the crawled URL.
+    - dict: A dictionary with the extracted data, including favicon, meta description, title,
+      open graph tags, Twitter card tags, canonical URL, internal and external links, image URLs,
+      and sitemap URLs.
     """
+    # Extract favicon, meta description, and title
     favicon_tag = soup.find("link", {"rel": "icon"})
     meta_description_tag = soup.find("meta", {"name": "description"})
     title_tag = soup.find("title")
+
+    # Extract Open Graph and Twitter card tags
     og_tags = [str(tag) for tag in soup.find_all("meta", property=lambda x: x and x.startswith("og:"))]
     twitter_tags = [str(tag) for tag in soup.find_all("meta", attrs={"name": lambda x: x and x.startswith("twitter:")})]
+
+    # Extract canonical URL
     canonical_tag = soup.find("link", {"rel": "canonical"})
+
+    # Extract internal and external links
     internal_links, external_links = extract_links(soup, url)
+
+    # Extract image URLs
     images = [img['src'] for img in soup.find_all('img', src=True)]
 
-    return {
+    # Compile extracted data into a dictionary
+    extracted_data = {
         'favicon': favicon_tag.get("href") if favicon_tag else None,
         'meta_description': meta_description_tag.get("content") if meta_description_tag else None,
         'title': title_tag.get_text() if title_tag else None,
@@ -38,35 +49,47 @@ def extract_crawl_data(soup, url):
         'sitemap_urls': parse_sitemap(url)
     }
 
+    return extracted_data
+
+
 def extract_content_data(soup):
     """
-    Extracts main content data from the BeautifulSoup object.
+    Extracts main content data from a BeautifulSoup object, including titles, paragraphs,
+    headings, and lists.
+
     Parameters:
-    soup (BeautifulSoup): BeautifulSoup object of the crawled page.
+    - soup (BeautifulSoup): BeautifulSoup object of the crawled page.
+
     Returns:
-    dict: Extracted main content data.
+    - dict: A dictionary with the extracted main content data.
     """
+    # Extract title, paragraphs, headings, and lists
     title_tag = soup.find("title")
     paragraphs = [p.get_text().strip() for p in soup.find_all('p')]
     headings = [h.get_text().strip() for h in soup.find_all(['h1', 'h2', 'h3', 'h4', 'h5', 'h6'])]
     lists = [ul.get_text().strip() for ul in soup.find_all(['ul', 'ol'])]
 
-    return {
+    # Compile extracted content into a dictionary
+    content_data = {
         'title': title_tag.get_text() if title_tag else None,
         'paragraphs': paragraphs,
         'headings': headings,
         'lists': lists
     }
 
+    return content_data
+
+
 def extract_links(soup, base_url):
     """
-    Extracts all internal and external links from the BeautifulSoup object.
+    Extracts all internal and external links from a BeautifulSoup object and categorizes them.
+
     Parameters:
-    soup (BeautifulSoup): BeautifulSoup object of the crawled page.
-    base_url (str): The base URL of the site being crawled.
-    seo (bool): If True, links are returned without http/https protocols.
+    - soup (BeautifulSoup): BeautifulSoup object of the crawled page.
+    - base_url (str): The base URL for resolving relative links.
+
     Returns:
-    tuple: A tuple containing two lists - internal links and external links.
+    - tuple: A tuple containing two lists, the first with internal links and the second with external links.
     """
     internal_links = []
     external_links = []
@@ -76,8 +99,9 @@ def extract_links(soup, base_url):
 
     for link in soup.find_all('a', href=True):
         href = link['href'].split('#')[0]  # Remove URL fragments
-        href = href.split('?')[0]  # Remove URL query parameters if not needed for SEO
+        href = href.split('?')[0]  # Remove URL query parameters
 
+        # Categorize and normalize links
         if href.startswith('/'):
             full_link = urljoin(base_url, href.lstrip('/'))
             internal_links.append(full_link)
@@ -86,37 +110,41 @@ def extract_links(soup, base_url):
 
     return internal_links, external_links
 
+
 def parse_sitemap(url, script=False):
     """
-    Parses the sitemap of a given URL and returns the list of URLs found in it.
-    Parameters:
-    url (str): The base URL whose sitemap is to be parsed.
-    Returns:
-    list: A list of URLs found in the sitemap.
-    """
-    sitemap_url = url + "/sitemap.xml"
-    sitemap_url2 = url + "/static/sitemap.xml"
-    if script:
-        response = requests.get(url)
-        response.raise_for_status()
-        if response.status_code == 200:
-            soup = BeautifulSoup(response.content, 'xml')
-            return [element.text for element in soup.find_all("loc")]
-    try:
-        response = requests.get(sitemap_url)
-        response.raise_for_status()
-        if response.status_code == 200:
-            soup = BeautifulSoup(response.content, 'xml')
-            return [element.text for element in soup.find_all("loc")]
-        else:
-            return ["NO SITEMAP FOUND IN WEBSITE"]
-    except Exception:
-        response = requests.get(sitemap_url2)
-        if response.status_code == 200:
-            soup = BeautifulSoup(response.content, 'xml')
-            return [element.text for element in soup.find_all("loc")]
-        else:
-            return ["NO SITEMAP FOUND IN WEBSITE"]
+    Parses the sitemap of a given URL to extract and return all contained URLs.
+    If 'script' is True, the 'url' parameter is treated as the full sitemap link.
 
-    except requests.exceptions.RequestException:
+    Parameters:
+    - url (str): The URL to the sitemap if 'script' is True, or the base URL whose sitemap is to be parsed.
+    - script (bool): Indicates whether the provided URL is the direct link to the sitemap.
+
+    Returns:
+    - list: A list of URLs found in the sitemap. If no sitemap is found, returns an
+            appropriate message.
+    """
+    if script:
+        # Directly use the provided URL for the sitemap
+        try:
+            response = requests.get(url)
+            if response.status_code == 200:
+                soup = BeautifulSoup(response.content, 'xml')
+                return [element.text for element in soup.find_all("loc")]
+        except requests.exceptions.RequestException:
+            return []
+    else:
+        # Standard sitemap URLs
+        sitemap_urls = [url + "/sitemap.xml", url + "/static/sitemap.xml"]
+
+        # Attempt to parse standard sitemaps
+        for sitemap_url in sitemap_urls:
+            try:
+                response = requests.get(sitemap_url)
+                if response.status_code == 200:
+                    soup = BeautifulSoup(response.content, 'xml')
+                    return [element.text for element in soup.find_all("loc")]
+            except requests.exceptions.RequestException:
+                continue  # Proceed to next URL on failure
+
         return []

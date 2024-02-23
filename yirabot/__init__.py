@@ -22,39 +22,24 @@ class Yirabot:
         self.sitemap_url = None
 
     def seo_analysis(self, url, session=None):
+        """
+        Performs SEO analysis on the given URL, extracting and analyzing various SEO factors.
+        """
+        headers = {'User-Agent': get_random_user_agent()}
         try:
-            response = session.get(url) if session else requests.get(url)
+            response = session.get(url, headers=headers) if session else requests.get(url, headers=headers)
+            response.raise_for_status()
+
             soup = BeautifulSoup(response.content, 'html.parser')
-
-            title_length, title_status = analyze_title(soup)
-            meta_desc_length, meta_desc_status = analyze_meta_description(soup)
-            headings, heading_structure_status = analyze_headings(soup)
-            images_without_alt = analyze_images_for_alt_text(soup)
-
-            # Combine texts for keyword analysis
-            combined_text = get_combined_text(soup)
-            keyword_results = keyword_analysis(combined_text)
-
-            # Mobile Responsiveness Check
-            is_responsive, responsiveness_message = check_mobile_responsiveness(url)
-
-            # Social Media Integration Check
-            social_media_integration = check_social_media_integration(url)
-
-            # Language Check
-            website_language = check_website_language(url)
-
-
             data = {
-                'title_length': title_length,
-                'title_status': title_status,
-                'meta_desc_length': meta_desc_length,
-                'meta_desc_status': meta_desc_status,
-                'heading_structure_status': heading_structure_status,
-                'images_without_alt': images_without_alt,
-                'is_responsive': is_responsive,
-                'social_media_integration': social_media_integration,
-                'website_language': website_language
+                'title_length': analyze_title(soup),
+                'meta_desc_length': analyze_meta_description(soup),
+                'headings': analyze_headings(soup),
+                'images_without_alt': analyze_images_for_alt_text(soup),
+                'keyword_results': keyword_analysis(get_combined_text(soup)),
+                'is_responsive': check_mobile_responsiveness(url),
+                'social_media_integration': check_social_media_integration(url),
+                'website_language': check_website_language(url),
             }
             return data
 
@@ -176,6 +161,7 @@ class Yirabot:
         except RequestException:
             raise errors.RequestError(sitemap_url)
         responses = {}
+
 
         for url in self.urls:
             response = requests.head(url, allow_redirects=True)
