@@ -83,37 +83,41 @@ def crawl_content(url, extract=False, extract_json=False, session=None, mobile=F
     """
     headers = {'User-Agent': get_random_user_agent(mobile=mobile)}
 
-    #try:
-    # Check if the URL is allowed by robots.txt
-    if not is_allowed_by_robots_txt(url):
-        print("YiraBot: Crawling forbidden by robots.txt")
-        return
+    try:
+        # Check if the URL is allowed by robots.txt
+        if not is_allowed_by_robots_txt(url):
+            print("YiraBot: Crawling forbidden by robots.txt")
+            return
 
-    # Perform the request with the provided session or a new session
-    response = session.get(url, headers=headers) if session else requests.get(url, headers=headers)
+        # Perform the request with the provided session or a new session
+        response = session.get(url, headers=headers) if session else requests.get(url, headers=headers)
 
-    # Handle server-induced delays
-    dynamic_delay(response)
+        # Handle server-induced delays
+        dynamic_delay(response)
 
-    # Check for successful response
-    response.raise_for_status()
+        print("YiraBot: Using Mobile User Agent") if mobile else None
+        time.sleep(1) if mobile else None
 
-    # Parse the response content
-    soup = BeautifulSoup(response.text, features="html5lib")
+        # Check for successful response
+        response.raise_for_status()
 
-    # Extract content data from the parsed HTML
-    data = extract_content_data(soup)
+        # Parse the response content
+        soup = BeautifulSoup(response.text, features="html5lib")
 
-    # Decide whether to save or display the extracted data
-    if extract or extract_json:
-        save_crawl_data(data, url, extract, extract_json)
-    else:
-        display_crawl_data(data)
+        # Extract content data from the parsed HTML
+        data = extract_content_data(soup)
 
-   # except (HTTPError, ConnectionError, Timeout, RequestException) as e:
-      #  print(f"YiraBot: Error occurred: {e}")
-    #except Exception as e:
-       # print(f"YiraBot: An unexpected error occurred: {e}")
+        # Decide whether to save or display the extracted data
+        if extract or extract_json:
+            save_crawl_data(data, url, extract, extract_json)
+        else:
+            display_crawl_data(data)
+
+    except (HTTPError, ConnectionError, Timeout, RequestException) as e:
+        print(f"YiraBot: Error occurred: {e}")
+    except Exception as e:
+        print(f"YiraBot: An unexpected error occurred: {e}")
+
 
 def crawl_protected_page():
     """
