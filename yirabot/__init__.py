@@ -8,11 +8,7 @@ from bs4 import BeautifulSoup
 from .data_extraction_functions import parse_sitemap
 
 
-"""
-YiraBots Python Module Integration.
 
-Still Under Development
-"""
 
 
 # noinspection PyUnboundLocalVariable
