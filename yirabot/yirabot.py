@@ -9,8 +9,8 @@ def main():
     """
     if len(sys.argv) < 2:
         help()
-    elif len(sys.argv) > 4:
-        sys.exit("YiraBot: Too many arguments!")
+    elif len(sys.argv) > 5:
+        sys.exit("YiraBot: Too many arguments!") if "-mobile" not in sys.argv else None
     else:
         command = sys.argv[1].lower()
         argument = sys.argv[2] if len(sys.argv) > 2 else None
@@ -54,11 +54,26 @@ def process_crawl_command(command, argument):
     if not argument:
         sys.exit("YiraBot: A URL is required for this command.")
     url = validate_url(argument)
-    flag = sys.argv[3] if len(sys.argv) == 4 else None
 
-    extract = flag == "-file"
-    extract_json = flag == "-json"
-    mobile = flag == "-mobile"
+    # Define the expected options
+    expected_options = {"-mobile", "-file", "-json"}
+
+    # Extract the actual options (excluding the script name and the primary command)
+    actual_options = set(
+        sys.argv[3:])
+
+    # Check for unexpected arguments
+    if len(sys.argv) > 4:  # Adjusted to account for the primary command and at least one option
+        # Identify any arguments that are not in the list of expected options
+        unexpected_args = [arg for arg in actual_options if arg not in expected_options]
+
+        # Proceed only if there are no unexpected arguments and at least one expected option is present
+        if unexpected_args or not any(option in sys.argv for option in expected_options):
+            sys.exit("YiraBot: Unexpected argument(s) {}".format(', '.join(unexpected_args)))
+
+    extract = True if "-file" in sys.argv else False
+    extract_json = True if "-json" in sys.argv else False
+    mobile = True if "-mobile" in sys.argv else False
 
     if command == "crawl":
         crawl(url, extract=extract, extract_json=extract_json, mobile=mobile)

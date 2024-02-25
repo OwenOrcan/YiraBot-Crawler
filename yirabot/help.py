@@ -1,17 +1,20 @@
-from colorama import Fore
-
-
+RED = "\033[31m"
+MAGENTA = "\033[35m"
+WHITE = "\033[37m"
+CYAN = "\033[36m"
+LIGHTBLUE_EX = "\033[94m"
+RESET = "\033[0m"
 
 def help():
-    HELP_MESSAGE = Fore.RED + """
-YiraBot Web Crawler v1.0.9
+    help_message = RED + """
+YiraBot Web Crawler v1.0.9 test
 ----------------------------------
-Command Line Web Crawling, Web Scraping and SEO Analysis Tool""" + Fore.MAGENTA + """
+Command Line Web Crawling, Web Scraping and SEO Analysis Tool""" + MAGENTA + """
 
 Usage:
-    yirabot [command] <url> [flag] """ + Fore.WHITE + """
+    yirabot [command] <url> [flag] """ + WHITE + """
 
-Commands:""" + Fore.CYAN + """
+Commands:""" + CYAN + """
 
 crawl
     - Crawl: Performs a standard crawl of the specified URL.
@@ -29,15 +32,15 @@ scrape
         -file: Saves content data to a text file.
         -json: Saves content data to a JSON file.
         -mobile: Uses a mobile User Agent to scrape
-        
+
 get-html
     - HTML Copy: Downloads and saves the complete HTML of the specified URL.
 
 session
     - Protected Crawl: Starts a session for crawling authenticated pages.
 
-""" + Fore.LIGHTBLUE_EX + """
+""" + LIGHTBLUE_EX + """
 For detailed documentation and examples, visit:
 https://github.com/OwenOrcan/YiraBot-Crawler
-    """ + Fore.RESET
-    print(HELP_MESSAGE)
+    """ + RESET
+    print(help_message)
