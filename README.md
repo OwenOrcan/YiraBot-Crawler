@@ -4,15 +4,6 @@
 # [📰 Read the Latest Release Notes](https://github.com/OwenOrcan/YiraBot-Crawler/releases)
 
 
-### Development Status on [YiraBot 1.0.9](https://github.com/OwenOrcan/YiraBot-Crawler/blob/python-module-development/1.0.9.md)
-
-| Feature | Status | Progress |
-| ------- | ------ | -------- |
-| Crawler class and methods | Completed | ▮▮▮▮▮▮▮▮▮▮ (100%) |
-| New Feature to validate routes | Completed | ▮▮▮▮▮▮▮▮▮▮ (100%) |
-| SEO class and methods | Not Started | ▯▯▯▯▯▯▯▯▯▯ (0%) |
-| General crawling and scraping functions | Not Started | ▯▯▯▯▯▯▯▯▯▯ (0%) |
-| Minor fixes and additions| Not Started| ▯▯▯▯▯▯▯▯▯▯ (0%) |
 
 
 
