@@ -7,7 +7,7 @@ RESET = "\033[0m"
 
 def help():
     help_message = RED + """
-YiraBot Web Crawler v1.0.9 test
+YiraBot Web Crawler v1.0.9 
 ----------------------------------
 Command Line Web Crawling, Web Scraping and SEO Analysis Tool""" + MAGENTA + """
 
