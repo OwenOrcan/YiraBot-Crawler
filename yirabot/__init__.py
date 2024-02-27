@@ -8,9 +8,6 @@ from bs4 import BeautifulSoup
 from .data_extraction_functions import parse_sitemap
 
 
-
-
-
 # noinspection PyUnboundLocalVariable
 class Yirabot:
     def __init__(self):
@@ -58,7 +55,6 @@ class Yirabot:
             response = session.get(url, headers=headers) if session else requests.get(url, headers=headers)
             dynamic_delay(response, script=True)
             response.raise_for_status()
-
             soup = BeautifulSoup(response.text, features="html5lib")
 
             meta_description_tag = soup.find("meta", {"name": "description"})
@@ -84,7 +80,7 @@ class Yirabot:
                 'sitemap_urls': parse_sitemap(url)
             }
             if type(data) is None:
-                self.crawl(url, session, force)
+                self.crawl(url, session, force) # sometimes the function returns none, when that happens, call that shit again.
             else:
                 return data
 
@@ -157,7 +153,6 @@ class Yirabot:
         except RequestException:
             raise errors.RequestError(sitemap_url)
         responses = {}
-
 
         for url in self.urls:
             response = requests.head(url, allow_redirects=True)
