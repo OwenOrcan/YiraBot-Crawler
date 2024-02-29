@@ -120,7 +120,8 @@ YiraBot is a powerful tool for developers, SEO specialists, and anyone intereste
 
 
 # YiraBot Python Module
-![Yirabot Request Process.png](..%2F..%2F..%2FPictures%2FYirabot%20Request%20Process.png)
+![Yirabot Request Process](https://github.com/OwenOrcan/YiraBot-Crawler/assets/144565916/840a5c52-9bc2-443d-aa9b-4043db62a4c2)
+
 
 ## Core Functionalities
 
