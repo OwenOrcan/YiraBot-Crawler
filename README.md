@@ -120,6 +120,8 @@ YiraBot is a powerful tool for developers, SEO specialists, and anyone intereste
 
 
 # YiraBot Python Module
+![Yirabot Request Process.png](..%2F..%2F..%2FPictures%2FYirabot%20Request%20Process.png)
+
 ## Core Functionalities
 
 ### 1. SEO Analysis (`seo_analysis`)
