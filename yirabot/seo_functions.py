@@ -65,7 +65,7 @@ def check_social_media_integration(url):
 
 def check_mobile_responsiveness(url):
     try:
-        response = requests.get(url)
+        response = requests.get(url,timeout=10)
         soup = BeautifulSoup(response.content, 'html.parser')
         viewport_meta = soup.find("meta", {"name": "viewport"})
 
