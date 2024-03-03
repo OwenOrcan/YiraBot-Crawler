@@ -25,8 +25,4 @@ jobs:
 
       - name: Run Bandit security checks
         continue-on-error: true
-        run: bandit -r ./yirabot -f json -o bandit-results.json
-
-
-      - name: Print Bandit Scan Results
-        run: cat bandit-results.json
+        run: bandit -r ./yirabot
