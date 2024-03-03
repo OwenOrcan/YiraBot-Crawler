@@ -5,7 +5,7 @@ import time
 import urllib.robotparser
 from bs4 import Tag
 from rich import print
-import random
+import secrets
 
 USER_AGENTS = [
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3",
@@ -136,4 +136,4 @@ def get_random_user_agent(mobile=False):
     Returns:
         str: A randomly selected user agent string.
     """
-    return random.choice(MOBILE_USER_AGENTS if mobile else USER_AGENTS)
+    return secrets.choice(MOBILE_USER_AGENTS if mobile else USER_AGENTS)
