@@ -19,7 +19,7 @@ STOPWORDS = set(
 
 def check_website_language(url):
     try:
-        response = requests.get(url)
+        response = requests.get(url, timeout=10)
         soup = BeautifulSoup(response.content, 'html.parser')
 
         html_tag = soup.find('html')
@@ -34,7 +34,7 @@ def check_website_language(url):
 
 def check_social_media_integration(url):
     try:
-        response = requests.get(url)
+        response = requests.get(url, timeout=10)
         soup = BeautifulSoup(response.content, 'html.parser')
 
         social_media = {
@@ -83,7 +83,7 @@ def check_link_status(url, session=None):
     Returns a tuple of (is_broken, status_code, reason).
     """
     try:
-        response = session.head(url, allow_redirects=True) if session else requests.head(url, allow_redirects=True)
+        response = session.head(url, allow_redirects=True, timeout=10) if session else requests.head(url, allow_redirects=True, timeout=10)
         if response.status_code == 404:
             return True, 404, "Not Found"
         elif 300 <= response.status_code < 400:
@@ -172,7 +172,7 @@ def analyze_images_for_alt_text(soup):
 def seo_error_analysis(url, session=None):
     try:
         print("YiraBot: Starting SEO Analysis")
-        response = session.get(url) if session else requests.get(url)
+        response = session.get(url, timeout=10) if session else requests.get(url, timeout=10)
         soup = BeautifulSoup(response.content, 'html.parser')
 
         title_length, title_status = analyze_title(soup)

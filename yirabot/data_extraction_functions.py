@@ -140,7 +140,7 @@ def parse_sitemap(url, script=False):
         # Attempt to parse standard sitemaps
         for sitemap_url in sitemap_urls:
             try:
-                response = requests.get(sitemap_url)
+                response = requests.get(sitemap_url, timeout=10)
                 if response.status_code == 200:
                     soup = BeautifulSoup(response.content, 'xml')
                     return [element.text for element in soup.find_all("loc")]
