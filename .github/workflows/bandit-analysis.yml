@@ -55,5 +55,4 @@ jobs:
       - name: Create GitHub Issues for Bandit Findings
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          REPOSITORY_FULL_NAME: ${{ github.repository }}
-        run: python .github/scripts/create_issues_from_bandit.py $GITHUB_TOKEN $REPOSITORY_FULL_NAME
+        run: python .github/scripts/create_issues_from_bandit.py
