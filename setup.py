@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='YiraBot',
-    version='1.0.8',
+    version='1.0.9.1',
     packages=find_packages(),
     install_requires=open('requirements.txt').readlines(),
     author='Owen Orcan',
