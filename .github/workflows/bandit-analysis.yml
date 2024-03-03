@@ -1,33 +1,59 @@
-name: Bandit Security Check
+name: Python Security Check with Bandit and Issue Creation
 
 on:
   push:
-    branches: [ master ]
+    branches:
+      - main
   pull_request:
-    branches: [ master ]
+    branches:
+      - main
 
 jobs:
-  security-check:
+  bandit-scan:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out repository code
+      - name: Check out repository
         uses: actions/checkout@v3
 
       - name: Set up Python
         uses: actions/setup-python@v3
         with:
-          python-version: '3.8'
-
-      - name: Cache Python dependencies
-        uses: actions/cache@v2
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
+          python-version: 3.8
 
       - name: Install Bandit
         run: pip install bandit
 
-      - name: Run Bandit security checks
-        run: bandit -r yirabot/.
+      - name: Run Bandit security checks and save results
+        run: bandit -r ./yirabot -f json -o bandit-results.json
+
+      - name: Upload Bandit Scan Results
+        uses: actions/upload-artifact@v2
+        with:
+          name: bandit-results
+          path: bandit-results.json
+
+  create-issues:
+    needs: bandit-scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Bandit Scan Results
+        uses: actions/download-artifact@v2
+        with:
+          name: bandit-results
+
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: 3.8
+
+      - name: Install PyGithub
+        run: pip install PyGithub
+
+      - name: Create GitHub Issues for Bandit Findings
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPOSITORY_FULL_NAME: ${{ github.repository }}
+        run: python .github/scripts/create_issues_from_bandit.py $GITHUB_TOKEN $REPOSITORY_FULL_NAME
