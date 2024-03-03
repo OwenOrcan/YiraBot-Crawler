@@ -127,7 +127,7 @@ def parse_sitemap(url, script=False):
     if script:
         # Directly use the provided URL for the sitemap
         try:
-            response = requests.get(url)
+            response = requests.get(url, timeout=10)
             if response.status_code == 200:
                 soup = BeautifulSoup(response.content, 'xml')
                 return [element.text for element in soup.find_all("loc")]

@@ -38,7 +38,7 @@ def crawl(url, extract=False, extract_json=False, session=None, mobile=False):
             return
 
         # Make the request using a session if provided, else use requests.get
-        response = session.get(url, headers=headers) if session else requests.get(url, headers=headers)
+        response = session.get(url, headers=headers) if session else requests.get(url, headers=headers, timeout=10)
 
         # Handle server-induced delays
         dynamic_delay(response)
@@ -90,7 +90,7 @@ def crawl_content(url, extract=False, extract_json=False, session=None, mobile=F
             return
 
         # Perform the request with the provided session or a new session
-        response = session.get(url, headers=headers) if session else requests.get(url, headers=headers)
+        response = session.get(url, headers=headers, timeout=10) if session else requests.get(url, headers=headers, timeout=10)
 
         # Handle server-induced delays
         dynamic_delay(response)
@@ -148,7 +148,7 @@ def crawl_protected_page():
             return login_url, expected_response, credentials
 
         login_url, expected_response, credentials = login()
-        response = session.post(login_url, data=credentials)
+        response = session.post(login_url, data=credentials, timeout=10)
         response.raise_for_status()
 
         if not login_successful(response, expected_response):
@@ -191,7 +191,7 @@ def get_html(url):
         None: The function saves the HTML content to a file and outputs the file name.
     """
     try:
-        response = requests.get(url)
+        response = requests.get(url, timeout=10)
         response.raise_for_status()  # Ensure the request was successful
         html = response.text
 

@@ -20,7 +20,7 @@ class Yirabot:
         """
         headers = {'User-Agent': get_random_user_agent()}
         try:
-            response = session.get(url, headers=headers) if session else requests.get(url, headers=headers)
+            response = session.get(url, headers=headers) if session else requests.get(url, headers=headers, timeout=10)
             response.raise_for_status()
 
             soup = BeautifulSoup(response.content, 'html.parser')
@@ -52,7 +52,7 @@ class Yirabot:
                 if not is_allowed_by_robots_txt(url):
                     raise errors.RobotsError(url)
 
-            response = session.get(url, headers=headers) if session else requests.get(url, headers=headers)
+            response = session.get(url, headers=headers) if session else requests.get(url, headers=headers, timeout=10)
             dynamic_delay(response, script=True)
             response.raise_for_status()
             soup = BeautifulSoup(response.text, features="html5lib")
@@ -108,7 +108,7 @@ class Yirabot:
                 if not is_allowed_by_robots_txt(url):
                     raise errors.RobotsError(url)
 
-            response = session.get(url, headers=headers) if session else requests.get(url, headers=headers)
+            response = session.get(url, headers=headers) if session else requests.get(url, headers=headers, timeout=10)
             dynamic_delay(response, script=True)
             response.raise_for_status()
 
@@ -155,7 +155,7 @@ class Yirabot:
         responses = {}
 
         for url in self.urls:
-            response = requests.head(url, allow_redirects=True)
+            response = requests.head(url, allow_redirects=True, timeout=10)
             response_code = response.status_code
             responses[url] = response_code
         return responses
