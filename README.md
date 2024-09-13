@@ -228,17 +228,3 @@ All contributors must follow the [Contribution Policy](https://github.com/OwenOr
 
 ### License
 YiraBot is open-sourced software licensed under the [GNU General Public License (Version 3)](LICENSE)
-## Developers:
-
-<table>
-  <tr>
-    <td align="center">
-      <img src="https://avatars.githubusercontent.com/u/144565916?v=4" alt="Owen Orcan" width="100" height="100"/><br>
-      <a href="https://github.com/OwenOrcan">Owen Orcan</a>
-    </td>
-    <td align="center">
-      <img src="https://avatars.githubusercontent.com/u/133255559?v=4" alt="Yigit Ocak" width="100" height="100"/><br>
-      <a href="https://github.com/YigitOcak">Yigit Ocak</a>
-    </td>
-  </tr>
-</table>
