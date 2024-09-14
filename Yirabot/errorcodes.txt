@@ -1,0 +1,3 @@
+0 = No Error
+1 = Invalid URL
+2 = Failed to fetch robots.txt
