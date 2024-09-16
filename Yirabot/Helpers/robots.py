@@ -6,35 +6,29 @@ from urllib.parse import urlparse
 class RobotsFileAnalyzer:
 
     def normalize_url(self, url):
-        # Add https:// if the URL does not start with http or https
         if not url.startswith(('http://', 'https://')):
             url = 'https://' + url
 
         parsed_url = urlparse(url)
-
-        # Rebuild the URL to only include the scheme (https) and domain
         domain = parsed_url.netloc
 
-        # Return the normalized URL in the form of https://domain
         return f'https://{domain}'
 
     def check_permissions(self, url):
         if not self.validate_url(url):
-            return (1, [], [])  # Error code 1: Invalid URL
+            return (1,[],[])
 
         allowed_urls = []
         disallowed_urls = []
-        url = self.normalize_url(url)
 
         try:
             response = requests.get(f"{url}/robots.txt")
-            response.raise_for_status()  # Handle HTTP errors
+            response.raise_for_status()
 
-            # Parse robots.txt lines for Allow and Disallow rules
             current_user_agent = None
             for line in response.text.splitlines():
                 line = line.strip()
-                if not line or line.startswith('#'):  # Skip irrelevant lines
+                if not line or line.startswith('#'):
                     continue
 
                 if line.lower().startswith('user-agent:'):
@@ -46,7 +40,7 @@ class RobotsFileAnalyzer:
                     if path:
                         disallowed_urls.append(path)
 
-            return (0, allowed_urls, disallowed_urls)  # No errors, return lists
+            return (0, allowed_urls, disallowed_urls)
 
         except requests.RequestException:
             return (2, [], [])
@@ -61,7 +55,6 @@ class RobotsFileAnalyzer:
             r'(\/[^\s]*)?$'  # Optional path
         )
 
-        # Match the URL against the pattern
         return re.match(url_pattern, url) is not None
 
 
