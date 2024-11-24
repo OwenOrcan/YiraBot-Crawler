@@ -1,6 +1,4 @@
 
-# 🎉🎉🎉 YIRABOT IS GETTING A COMPLETE REWRITE AND A WEBSITE WHERE YOU CAN USE YIRABOT ON YOUR BROWSER 🎉🎉🎉
-
 ![YiraBot ](https://github.com/OwenOrcan/YiraBot-Crawler/assets/144565916/54cfd22f-9bc8-4505-b3fe-ad6dd0de83d4)
 
 # [📰 Read the Latest Release Notes](https://github.com/OwenOrcan/YiraBot-Crawler/releases)
