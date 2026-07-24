@@ -1,4 +1,11 @@
 
+> ### ⚠️ This project is no longer maintained
+>
+> YiraBot is archived and read-only. The Yirabot 2.0 rewrite and browser
+> interface announced in 2024 were not completed. The final release
+> (`1.0.9.2`) remains on [PyPI](https://pypi.org/project/YiraBot/), and the
+> source is kept here for reference.
+
 ![YiraBot ](https://github.com/OwenOrcan/YiraBot-Crawler/assets/144565916/54cfd22f-9bc8-4505-b3fe-ad6dd0de83d4)
 
 # [📰 Read the Latest Release Notes](https://github.com/OwenOrcan/YiraBot-Crawler/releases)
